@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Examen Final · Fundamentos de Economía</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg-0: #0e1410;
+    --bg-1: #131a15;
+    --bg-2: #1a221c;
+    --panel: #171f19;
+    --line: #2b352d;
+    --paper: #f2ecdd;
+    --ink: #e8e6dd;
+    --ink-dim: #9aa79c;
+    --gold: #c9a24b;
+    --gold-soft: #e3c37a;
+    --rust: #b5563a;
+    --sage: #7fa389;
+    --sage-deep: #4e7a5e;
+    --danger: #c1543d;
+    --ok: #6fae7f;
+    --radius: 14px;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,75,0.08), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 20%, rgba(127,163,137,0.07), transparent 55%),
+      var(--bg-0);
+    color: var(--ink);
+    font-family: var(--sans);
+    min-height:100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection{ background: var(--gold); color:#1a1a1a; }
+
+  /* subtle grain / ledger lines */
+  .ledger-bg{
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.35;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent, transparent 27px, rgba(255,255,255,0.018) 28px
+    );
+  }
+
+  a{ color:inherit; }
+
+  /* ================= HEADER ================= */
+  header.masthead{
+    position:relative; z-index:2;
+    padding: 30px 20px 22px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+  }
+  .masthead-inner{
+    max-width: 1100px; margin:0 auto;
+  }
+  .eyebrow-row{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold-soft); margin-bottom:14px;
+  }
+  .eyebrow-row .sep{ color: var(--line); }
+  .eyebrow-row .tag{
+    color: var(--ink-dim);
+  }
+  h1.title{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 7vw, 4rem);
+    line-height: 0.98;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
+    color: var(--paper);
+  }
+  h1.title em{
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold-soft);
+  }
+  .subtitle{
+    font-family: var(--sans);
+    font-size: clamp(0.9rem, 2.3vw, 1.05rem);
+    color: var(--ink-dim);
+    max-width: 640px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* stat strip */
+  .stat-strip{
+    display:flex; gap:0; margin-top: 22px; flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+  }
+  .stat{
+    flex: 1 1 120px;
+    padding: 14px 18px 4px 0;
+    border-right: 1px solid var(--line);
+  }
+  .stat:last-child{ border-right:none; }
+  .stat .num{
+    font-family: var(--serif); font-weight:700; font-size: 1.7rem; color: var(--paper);
+    display:block; line-height:1;
+  }
+  .stat .lbl{
+    font-family: var(--mono); font-size: 10.5px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--ink-dim); margin-top:5px; display:block;
+  }
+
+  /* ================= CONTROLS ================= */
+  .controls-wrap{
+    position: sticky; top:0; z-index: 10;
+    background: rgba(14,20,16,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .controls-inner{
+    max-width: 1100px; margin:0 auto; padding: 14px 20px;
+    display:flex; flex-wrap: wrap; gap: 10px; align-items:center; justify-content: space-between;
+  }
+  .mode-select{
+    display:flex; gap:8px; flex-wrap: wrap;
+  }
+  .mode-btn{
+    font-family: var(--mono); font-size: 12.5px; letter-spacing:0.03em;
+    background: var(--panel); color: var(--ink-dim);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 9px 16px; cursor:pointer; transition: all .15s ease;
+    display:flex; align-items:center; gap:7px;
+  }
+  .mode-btn .dot{
+    width:6px; height:6px; border-radius:50%; background: var(--ink-dim); flex:none;
+  }
+  .mode-btn:hover{ border-color: var(--sage-deep); color: var(--ink); }
+  .mode-btn.active{
+    background: var(--gold); color: #201a0c; border-color: var(--gold); font-weight:600;
+  }
+  .mode-btn.active .dot{ background:#201a0c; }
+
+  .progress-mini{
+    font-family: var(--mono); font-size: 12px; color: var(--ink-dim);
+    display:flex; align-items:center; gap:10px;
+  }
+  .progress-mini .bar{
+    width: 90px; height:4px; background: var(--line); border-radius:3px; overflow:hidden;
+  }
+  .progress-mini .bar-fill{
+    height:100%; background: linear-gradient(90deg, var(--sage-deep), var(--gold)); width:0%;
+    transition: width .3s ease;
+  }
+
+  /* ================= MAIN LAYOUT ================= */
+  main{
+    max-width: 1100px; margin: 0 auto; padding: 28px 20px 90px;
+    position: relative; z-index: 1;
+  }
+
+  .panel-empty{
+    text-align:center; padding: 90px 20px; color: var(--ink-dim);
+    font-family: var(--serif); font-style: italic; font-size: 1.3rem;
+  }
+
+  /* question card */
+  .qcard{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 26px 22px;
+    margin-bottom: 18px;
+    position: relative;
+    animation: fadeUp .35s ease both;
+  }
+  @keyframes fadeUp{ from{ opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;} }
+
+  .qcard.correct{ border-color: var(--sage-deep); box-shadow: 0 0 0 1px rgba(127,163,137,0.25) inset; }
+  .qcard.incorrect{ border-color: var(--rust); box-shadow: 0 0 0 1px rgba(181,86,58,0.25) inset; }
+
+  .qhead{
+    display:flex; justify-content:space-between; align-items:flex-start; gap: 14px;
+    margin-bottom: 14px;
+  }
+  .qnum{
+    font-family: var(--mono); font-size: 12px; color: var(--gold-soft);
+    letter-spacing: 0.06em;
+  }
+  .qsection{
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+    white-space: nowrap;
+  }
+  .qtext{
+    font-family: var(--serif); font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+    line-height: 1.4; color: var(--paper); font-weight: 500;
+    margin-bottom: 18px;
+  }
+
+  .options{
+    display:flex; flex-direction: column; gap: 9px;
+  }
+  .opt{
+    display:flex; align-items:flex-start; gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.012);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .opt:hover{ border-color: var(--sage-deep); background: rgba(127,163,137,0.06); }
+  .opt .letter{
+    font-family: var(--mono); font-weight:600; font-size: 12.5px;
+    width: 22px; height:22px; border-radius:50%;
+    border: 1px solid var(--line); flex: none;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--ink-dim);
+  }
+  .opt .otext{ font-size: 0.95rem; line-height:1.45; color: var(--ink); padding-top:2px; }
+
+  .opt.selected{ border-color: var(--gold); background: rgba(201,162,75,0.08); }
+  .opt.selected .letter{ background: var(--gold); color:#201a0c; border-color: var(--gold); }
+
+  .opt.reveal-correct{ border-color: var(--sage-deep); background: rgba(127,163,137,0.12); }
+  .opt.reveal-correct .letter{ background: var(--sage-deep); color:#0e1410; border-color: var(--sage-deep); }
+  .opt.reveal-wrong{ border-color: var(--rust); background: rgba(181,86,58,0.1); }
+  .opt.reveal-wrong .letter{ background: var(--rust); color:#0e1410; border-color: var(--rust); }
+
+  /* true/false */
+  .tf-row{ display:flex; gap:10px; }
+  .tf-btn{
+    flex:1; padding: 14px; border-radius: 10px; border: 1px solid var(--line);
+    background: rgba(255,255,255,0.012); cursor:pointer;
+    font-family: var(--mono); font-weight:600; letter-spacing:0.04em;
+    color: var(--ink-dim); text-align:center; transition: all .15s ease;
+  }
+  .tf-btn:hover{ border-color: var(--sage-deep); }
+  .tf-btn.selected{ border-color: var(--gold); background: rgba(201,162,75,0.1); color: var(--gold-soft); }
+  .tf-btn.reveal-correct{ border-color: var(--sage-deep); background: rgba(127,163,137,0.14); color: var(--sage); }
+  .tf-btn.reveal-wrong{ border-color: var(--rust); background: rgba(181,86,58,0.12); color: var(--danger); }
+
+  /* essay / desarrollo */
+  textarea.essay{
+    width:100%; min-height: 130px; resize: vertical;
+    background: rgba(0,0,0,0.18); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--ink); font-family: var(--sans); font-size: 0.92rem; padding: 14px;
+    line-height:1.5;
+  }
+  textarea.essay:focus{ outline: none; border-color: var(--gold); }
+
+  .rubric-toggle{
+    margin-top: 12px; font-family: var(--mono); font-size: 12px;
+    color: var(--sage); cursor: pointer; display:inline-flex; align-items:center; gap:6px;
+  }
+  .rubric-box{
+    margin-top: 10px; padding: 14px 16px; border-radius: 10px;
+    background: rgba(127,163,137,0.06); border: 1px solid var(--sage-deep);
+    font-size: 0.88rem; line-height: 1.55; color: var(--ink); display:none;
+  }
+  .rubric-box.open{ display:block; }
+  .rubric-box strong{ color: var(--sage); }
+
+  /* footer actions per card */
+  .qfoot{
+    display:flex; justify-content: space-between; align-items:center; gap: 12px;
+    margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line);
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: var(--mono); font-size: 12px; letter-spacing:0.03em;
+    padding: 9px 15px; border-radius: 8px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink-dim); cursor:pointer;
+    display:inline-flex; align-items:center; gap:7px; transition: all .15s ease;
+  }
+  .btn:hover{ border-color: var(--gold); color: var(--gold-soft); }
+  .btn.primary{
+    background: var(--sage-deep); border-color: var(--sage-deep); color: #0e1410; font-weight:600;
+  }
+  .btn.primary:hover{ background: var(--sage); border-color: var(--sage); color:#0e1410; }
+  .btn.ghost-gold{ color: var(--gold-soft); border-color: rgba(201,162,75,0.35); }
+
+  .feedback-tag{
+    font-family: var(--mono); font-size: 11.5px; letter-spacing:0.05em; text-transform:uppercase;
+    padding: 5px 10px; border-radius: 999px; display:none; align-items:center; gap:6px;
+  }
+  .feedback-tag.show{ display:inline-flex; }
+  .feedback-tag.ok{ background: rgba(127,163,137,0.15); color: var(--sage); }
+  .feedback-tag.bad{ background: rgba(181,86,58,0.15); color: var(--danger); }
+
+  /* materia panel (slide-in reading) */
+  .materia-box{
+    margin-top: 16px; border-radius: 10px; border: 1px solid var(--gold);
+    background: rgba(201,162,75,0.06);
+    padding: 16px 18px; display:none;
+  }
+  .materia-box.open{ display:block; animation: fadeUp .25s ease both; }
+  .materia-box .m-label{
+    font-family: var(--mono); font-size: 10.5px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--gold-soft); margin-bottom: 8px; display:flex; gap:8px; align-items:center;
+  }
+  .materia-box .m-text{
+    font-size: 0.9rem; line-height: 1.6; color: var(--ink);
+  }
+  .materia-box .m-source{
+    margin-top: 10px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+  }
+
+  /* explanation after answering (alternativas/V-F) */
+  .explain-box{
+    margin-top: 14px; border-radius: 10px; padding: 14px 16px;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--line);
+    font-size: 0.88rem; line-height: 1.55; color: var(--ink-dim); display:none;
+  }
+  .explain-box.show{ display:block; }
+  .explain-box strong{ color: var(--paper); }
+
+  /* ================= NAV BAR (bottom fixed) ================= */
+  .navbar{
+    position: fixed; bottom:0; left:0; right:0; z-index: 20;
+    background: rgba(14,20,16,0.94); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 12px 20px;
+  }
+  .navbar-inner{
+    max-width: 1100px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .navbar .score-line{
+    font-family: var(--mono); font-size: 12px; color: var(--ink-dim);
+  }
+  .navbar .score-line b{ color: var(--gold-soft); }
+  .nav-buttons{ display:flex; gap:8px; }
+
+  /* summary screen */
+  .summary-card{
+    background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius);
+    padding: 34px 28px; text-align:center; margin-bottom: 24px;
+  }
+  .summary-card .big-score{
+    font-family: var(--serif); font-weight:700; font-size: clamp(3rem, 12vw, 5rem);
+    color: var(--gold-soft); line-height:1;
+  }
+  .summary-card .big-score span{ font-size: 0.4em; color: var(--ink-dim); font-family: var(--mono); }
+  .summary-card p{ color: var(--ink-dim); margin-top: 10px; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar{ width: 9px; height:9px; }
+  ::-webkit-scrollbar-track{ background: var(--bg-0); }
+  ::-webkit-scrollbar-thumb{ background: var(--line); border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover{ background: var(--sage-deep); }
+
+  @media (max-width: 640px){
+    .qcard{ padding: 18px 16px 16px; }
+    .stat{ flex: 1 1 45%; }
+    .mode-select{ width:100%; overflow-x:auto; flex-wrap:nowrap; padding-bottom:2px; }
+    .mode-btn{ flex:none; }
+    .controls-inner{ flex-direction: column; align-items: stretch; }
+    .progress-mini{ justify-content: space-between; }
+    .navbar-inner{ justify-content: center; }
+    .nav-buttons{ width:100%; justify-content: space-between; }
+  }
+
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="ledger-bg"></div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="eyebrow-row">
+      <span class="tag">DuocUC · Escuela de Administración y Negocios</span>
+      <span class="sep">/</span>
+      <span class="tag">Fundamentos de Economía · EA1 – EA2 – EA3</span>
+    </div>
+    <h1 class="title">Simulacro de <em>Examen Final</em></h1>
+    <p class="subtitle">150 reactivos construidos a partir de los tres apuntes del curso — macroeconomía, mercado laboral y precios de mercado — con retroalimentación inmediata y acceso directo a la materia de respaldo.</p>
+
+    <div class="stat-strip">
+      <div class="stat"><span class="num">100</span><span class="lbl">Alternativas</span></div>
+      <div class="stat"><span class="num">25</span><span class="lbl">Verdadero / Falso</span></div>
+      <div class="stat"><span class="num">25</span><span class="lbl">Desarrollo</span></div>
+      <div class="stat"><span class="num">3</span><span class="lbl">Unidades cubiertas</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="controls-wrap">
+  <div class="controls-inner">
+    <div class="mode-select">
+      <button class="mode-btn active" data-mode="alternativas"><span class="dot"></span>Alternativas (100)</button>
+      <button class="mode-btn" data-mode="vf"><span class="dot"></span>Verdadero/Falso (25)</button>
+      <button class="mode-btn" data-mode="desarrollo"><span class="dot"></span>Desarrollo (25)</button>
+    </div>
+    <div class="progress-mini">
+      <span id="progressLabel">0 / 100 respondidas</span>
+      <div class="bar"><div class="bar-fill" id="progressBar"></div></div>
+    </div>
+  </div>
+</div>
+
+<main id="mainArea">
+  <!-- Questions injected by JS -->
+</main>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="score-line" id="scoreLine">Correctas: <b>0</b> · Incorrectas: <b>0</b> · Sin responder: <b>0</b></div>
+    <div class="nav-buttons">
+      <button class="btn" id="btnReset">↺ Reiniciar sección</button>
+      <button class="btn primary" id="btnFinish">Calificar sección ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Banco de preguntas — Examen Final Fundamentos de Economía (DuocUC)
+// EA1: Introducción a la Economía y Macroeconomía · EA2: Economía Laboral · EA3: Precios, Mercado y Emprendimiento
+
+const ALTERNATIVAS = [
+  {
+    "q": "Según G. Mankiw, la economía se define como:",
+    "opts": [
+      "El estudio de cómo aumentar las ganancias empresariales",
+      "El estudio del modo en que la sociedad gestiona sus recursos escasos",
+      "El estudio exclusivo del dinero y la banca",
+      "El estudio de la oferta monetaria de un país"
+    ],
+    "correct": 1,
+    "explain": "Mankiw (2017) define la economía como el estudio de cómo la sociedad gestiona sus recursos escasos, distinto de la definición de Samuelson que agrega la idea de elección entre usos alternativos.",
+    "materia": "EA1 · Sección '¿Qué es la Economía?': define la economía citando tanto a Samuelson como a Mankiw. La definición de Mankiw es la más breve y la más citada en exámenes.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "El concepto que describe que 'las necesidades humanas son ilimitadas mientras los recursos disponibles son limitados' corresponde a:",
+    "opts": [
+      "Eficiencia",
+      "Equidad",
+      "Escasez",
+      "Elección"
+    ],
+    "correct": 2,
+    "explain": "La escasez es el concepto central de la economía: recursos limitados frente a necesidades ilimitadas, lo que obliga a elegir.",
+    "materia": "EA1 · 'La economía como estudio': ESCASEZ — los recursos disponibles son limitados, mientras que las necesidades humanas son ilimitadas.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "¿Cuál de los siguientes NO es uno de los cuatro factores de producción mencionados en el material?",
+    "opts": [
+      "Tierra",
+      "Trabajo",
+      "Capital",
+      "Publicidad"
+    ],
+    "correct": 3,
+    "explain": "Los cuatro factores de producción son Tierra, Trabajo, Capital y Emprendimiento. La publicidad no es un factor de producción, sino una herramienta de marketing.",
+    "materia": "EA1 · 'Factores de Producción': Tierra, Trabajo, Capital y Emprendimiento (capacidad de organizar y gestionar los otros factores).",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "En la Frontera de Posibilidades de Producción (FPP), un punto ubicado DENTRO de la frontera representa:",
+    "opts": [
+      "Una combinación imposible de producir",
+      "Una combinación eficiente que usa todos los recursos",
+      "Una combinación ineficiente, con recursos ociosos",
+      "El equilibrio de mercado"
+    ],
+    "correct": 2,
+    "explain": "Los puntos dentro de la FPP (como F y D en el gráfico del apéndice) son ineficientes: no se están utilizando todos los recursos disponibles.",
+    "materia": "Apéndice Gráfico 1 (EA1): Punto F e D son 'Ineficiente – dentro de la frontera (recursos no usados)'. Los puntos sobre la frontera (A, B, E) son eficientes.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "El desplazamiento de la FPP hacia la derecha representa:",
+    "opts": [
+      "Una recesión económica",
+      "Crecimiento económico",
+      "Un aumento del desempleo",
+      "Una crisis de oferta"
+    ],
+    "correct": 1,
+    "explain": "Cuando la FPP se desplaza hacia afuera (a la derecha), la economía puede producir más de ambos bienes: esto es crecimiento económico, típicamente por mejoras tecnológicas o mayor disponibilidad de recursos.",
+    "materia": "Apéndice Gráfico 2 (EA1): El desplazamiento de la FPP hacia la derecha representa crecimiento económico, por mejoras tecnológicas, mayor disponibilidad de recursos o innovación.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "En el modelo de Flujo Circular de la Renta, ¿quiénes son los VENDEDORES en el mercado de factores de producción?",
+    "opts": [
+      "Las empresas",
+      "El gobierno",
+      "Los hogares",
+      "El sector externo"
+    ],
+    "correct": 2,
+    "explain": "En el mercado de factores de producción (tierra, trabajo, capital), los hogares son los vendedores/propietarios y las empresas son las compradoras.",
+    "materia": "EA1 · 'Modelo de diagrama: Flujo circular de la renta': HOGARES — son los propietarios y vendedores de los factores de la producción.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "¿Qué rama de la economía estudia el comportamiento de personas, familias y empresas al nivel más desagregado?",
+    "opts": [
+      "Macroeconomía",
+      "Microeconomía",
+      "Econometría",
+      "Economía internacional"
+    ],
+    "correct": 1,
+    "explain": "La microeconomía estudia el comportamiento económico al nivel más desagregado (individuos, hogares, empresas), mientras la macroeconomía estudia el sistema económico como un todo.",
+    "materia": "EA1 · 'Economía se divide en': MICROECONOMÍA estudia el comportamiento económico de personas, familias y empresas al nivel más desagregado posible.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "La ecuación de la Demanda Agregada (DA) es:",
+    "opts": [
+      "DA = C + I - G + XN",
+      "DA = C + I + G + (X - M)",
+      "DA = C - I + G + M",
+      "DA = PIB - Impuestos"
+    ],
+    "correct": 1,
+    "explain": "La Demanda Agregada se calcula como Consumo + Inversión + Gasto público + Exportaciones netas (Exportaciones - Importaciones).",
+    "materia": "EA1 · 'La Demanda Agregada (DA)': DA = C + I + G + (X - M), donde C=consumo, I=inversión, G=gasto público, X=exportaciones, M=importaciones.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "¿Cuál de los siguientes es un componente de la Demanda Agregada relacionado con el Estado?",
+    "opts": [
+      "Consumo de los hogares",
+      "Inversión empresarial",
+      "Gasto público",
+      "Exportaciones netas"
+    ],
+    "correct": 2,
+    "explain": "El Gasto Público (G) es el componente de la DA que corresponde al gasto del gobierno en salud, educación e infraestructura.",
+    "materia": "EA1 · 'El gasto público: impulsando el bienestar': el gobierno financia salud, educación e infraestructura como parte del gasto público (G) dentro de la DA.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "En el largo plazo, según el modelo de oferta y demanda agregada, un aumento en la demanda agregada provoca principalmente:",
+    "opts": [
+      "Un aumento sostenido de la producción real",
+      "Solo un aumento de los precios, sin incremento real en la producción",
+      "Una caída del PIB potencial",
+      "Una reducción de la inflación"
+    ],
+    "correct": 1,
+    "explain": "En el largo plazo la economía se ajusta al PIB potencial, por lo que un aumento en la DA (por ejemplo, imprimir más dinero) solo genera inflación sin aumentar la producción real.",
+    "materia": "EA1 · 'Equilibrio en el modelo de oferta y demanda agregada': EN EL LARGO PLAZO, un aumento en la demanda agregada solo elevará los precios sin incrementar la producción.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "La Oferta Agregada de Largo Plazo (OALP) se representa gráficamente como una curva:",
+    "opts": [
+      "Horizontal",
+      "Con pendiente positiva",
+      "Vertical en el nivel de PIB potencial",
+      "Con pendiente negativa"
+    ],
+    "correct": 2,
+    "explain": "En el largo plazo, la producción depende de los recursos disponibles y la tecnología, por lo que la curva de oferta agregada es vertical en el nivel de PIB potencial.",
+    "materia": "EA1 · 'La Oferta Agregada (OA)': LARGO PLAZO (OALP) — la curva es vertical en el nivel de PIB potencial.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "¿Cuál es la fórmula del PIB según el modelo del flujo circular de la actividad macroeconómica?",
+    "opts": [
+      "Y = C + I + G + XN",
+      "Y = C - I - G",
+      "Y = Ahorro + Inversión",
+      "Y = Exportaciones / Importaciones"
+    ],
+    "correct": 0,
+    "explain": "El PIB (Y) se compone de Consumo, Inversión, Gasto público y Exportaciones Netas: Y = C + I + G + XN.",
+    "materia": "EA1 · Gráfico 4 del Apéndice: 'El PIB puede medirse tanto por el flujo de dinero como por el flujo real. Fórmula: Y = C + I + G + XN'.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "El Índice de Precios al Consumidor (IPC) en Chile es utilizado, entre otras cosas, para:",
+    "opts": [
+      "Fijar el tipo de cambio directamente",
+      "Determinar la evolución de la UF y la UTM",
+      "Reemplazar al PIB como medida de crecimiento",
+      "Calcular la tasa de desempleo"
+    ],
+    "correct": 1,
+    "explain": "El IPC se usa como insumo para la política monetaria del Banco Central y para determinar la evolución de la Unidad de Fomento (UF) y la Unidad Tributaria Mensual (UTM), entre otros usos.",
+    "materia": "EA1 · '¿Para qué se utiliza el IPC?': determinar la evolución de la UF y la UTM; ser insumo para la Tasa de Política Monetaria del Banco Central de Chile.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "El desempleo que ocurre cuando una persona está en transición entre un trabajo y otro, o recién egresada buscando su primer empleo, se denomina:",
+    "opts": [
+      "Desempleo estructural",
+      "Desempleo cíclico",
+      "Desempleo friccional",
+      "Desempleo estacional"
+    ],
+    "correct": 2,
+    "explain": "El desempleo friccional corresponde a personas en transición entre empleos, incluyendo recién graduados buscando su primer trabajo.",
+    "materia": "EA1 · 'Desempleo: tipos y causas': DESEMPLEO FRICCIONAL — personas en transición entre trabajos, buscando un nuevo trabajo o recién graduados.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "Cuando el valor de una moneda AUMENTA con respecto a otra, se denomina:",
+    "opts": [
+      "Depreciación",
+      "Devaluación",
+      "Apreciación",
+      "Inflación cambiaria"
+    ],
+    "correct": 2,
+    "explain": "La apreciación ocurre cuando el valor de una moneda aumenta frente a otra; la depreciación es el fenómeno contrario.",
+    "materia": "EA1 · 'Tipo de cambio y balanza de pagos': APRECIACIÓN — cuando el valor de una moneda aumenta con respecto a otra.",
+    "section": "EA1 · Semana 4"
+  },
+  {
+    "q": "Según el material, ¿qué efecto tienen las tasas de interés bajas sobre la inversión y el consumo?",
+    "opts": [
+      "Los desalientan a ambos",
+      "Estimulan ambos",
+      "Estimulan la inversión pero desalientan el consumo",
+      "No tienen efecto"
+    ],
+    "correct": 1,
+    "explain": "Tasas de interés bajas estimulan tanto la inversión (menor costo de financiamiento) como el consumo (menor costo de endeudarse para comprar).",
+    "materia": "EA1 · 'Tasas de interés: rol y efectos': tasas bajas estimulan la inversión y estimulan el consumo; tasas altas desalientan ambas.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "El proceso mediante el cual una transacción de Bitcoin queda registrada de forma permanente e inmutable se garantiza gracias a:",
+    "opts": [
+      "Un banco central emisor",
+      "El Consenso Nakamoto (consenso distribuido)",
+      "Una autoridad reguladora única",
+      "El precio del dólar estadounidense"
+    ],
+    "correct": 1,
+    "explain": "El Consenso Nakamoto es el mecanismo de consenso distribuido que garantiza que cada transacción sea verificada por la red antes de registrarse permanentemente en la blockchain.",
+    "materia": "EA1 · 'Activos digitales: el origen Bitcoin': el proceso de consenso distribuido (Consenso Nakamoto) garantiza la verificación de cada transacción antes de su registro permanente.",
+    "section": "EA1 · Semana 5"
+  },
+  {
+    "q": "Una característica clave de la blockchain que impide que los registros puedan eliminarse o alterarse una vez confirmados se denomina:",
+    "opts": [
+      "Blockchain descentralizada",
+      "Blockchain pública",
+      "Blockchain inmutable",
+      "Blockchain privada"
+    ],
+    "correct": 2,
+    "explain": "La inmutabilidad es la propiedad de la blockchain por la cual, una vez confirmado un bloque, los registros no pueden eliminarse ni alterarse, garantizando seguridad.",
+    "materia": "EA1 · 'Blockchain como criptotecnología base': BLOCKCHAIN INMUTABLE — se registran las transacciones por agregación y los registros no se pueden eliminar.",
+    "section": "EA1 · Semana 5"
+  },
+  {
+    "q": "La cantidad de personas dispuestas a trabajar a un salario determinado se denomina:",
+    "opts": [
+      "Demanda de trabajo",
+      "Oferta de trabajo",
+      "Productividad laboral",
+      "Capital humano"
+    ],
+    "correct": 1,
+    "explain": "La oferta de trabajo es la cantidad de personas dispuestas a trabajar a un salario determinado; tiene relación positiva con el salario.",
+    "materia": "EA2 · Semana 7: OFERTA DE TRABAJO — cantidad de personas dispuestas a trabajar a un salario determinado.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "En el ejemplo del mercado laboral del material (tabla de equilibrio), el salario y cantidad de equilibrio son:",
+    "opts": [
+      "10 euros/hora y 250 trabajadores",
+      "20 euros/hora y 420 trabajadores",
+      "25 euros/hora y 510 trabajadores",
+      "30 euros/hora y 300 trabajadores"
+    ],
+    "correct": 1,
+    "explain": "En la tabla del Gráfico 2 (EA2), el equilibrio se produce a 20 euros/hora, donde la oferta (420) iguala exactamente a la demanda (420).",
+    "materia": "EA2 · Gráfico 2 del Apéndice: a 20 euros/hora, Oferta=420 y Demanda=420 → EQUILIBRIO ★.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "Cuando el salario de mercado está POR ENCIMA del salario de equilibrio, se produce:",
+    "opts": [
+      "Escasez de trabajadores",
+      "Exceso de oferta de trabajo (desempleo)",
+      "Un aumento automático de la productividad",
+      "Nada, el mercado se mantiene igual"
+    ],
+    "correct": 1,
+    "explain": "A salarios superiores al de equilibrio existe desempleo, ya que la cantidad ofrecida de trabajo supera la cantidad demandada por las empresas.",
+    "materia": "EA2 · Gráfico 2: a 25 y 30 euros/hora el estado es 'Exceso de oferta'; el material señala que a salarios superiores al de equilibrio existe desempleo.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "¿Cuál de los siguientes es un determinante de la DEMANDA de trabajo (según el material)?",
+    "opts": [
+      "Las preferencias por el tiempo libre",
+      "El costo de vida del trabajador",
+      "La productividad de los trabajadores",
+      "El salario mínimo legal"
+    ],
+    "correct": 2,
+    "explain": "La productividad de los trabajadores es un determinante de la demanda de trabajo, junto con la tecnología, ya que afecta cuánto están dispuestas a pagar las empresas.",
+    "materia": "EA2 · 'Determinantes de la demanda de trabajo': PRODUCTIVIDAD — la productividad de los trabajadores influye en la demanda laboral.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "El capital humano se define como:",
+    "opts": [
+      "El dinero invertido en maquinaria",
+      "Las capacidades, conocimientos y habilidades que poseen las personas",
+      "El total de acciones de una empresa",
+      "La cantidad de trabajadores contratados"
+    ],
+    "correct": 1,
+    "explain": "El capital humano se refiere a las capacidades, conocimientos y habilidades de las personas, esenciales para el desarrollo económico y social.",
+    "materia": "EA2 · Semana 8: DEFINICIÓN DE CAPITAL HUMANO — capacidades, conocimientos y habilidades que las personas poseen.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "¿Cuál de los siguientes NO es un costo de invertir en capital humano, según el material?",
+    "opts": [
+      "Matrícula",
+      "Materiales",
+      "Costo de oportunidad",
+      "Mayores ingresos futuros"
+    ],
+    "correct": 3,
+    "explain": "Mayores ingresos futuros es un BENEFICIO de invertir en capital humano, no un costo. Los costos incluyen matrícula, materiales, tiempo y costo de oportunidad.",
+    "materia": "EA2 · 'Inversión en Capital Humano: costos y beneficios': COSTOS = matrícula, materiales, tiempo, costo de oportunidad. BENEFICIOS = mayores ingresos, mejores oportunidades.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "Según la tabla de factores determinantes del salario del apéndice, ¿qué factor presenta el mayor impacto relativo?",
+    "opts": [
+      "Demanda (+65%)",
+      "Productividad (+72%)",
+      "Habilidades (+78%)",
+      "Educación (+85%)"
+    ],
+    "correct": 3,
+    "explain": "Según el Gráfico 3 del apéndice de EA2, la Educación presenta el mayor impacto positivo relativo sobre el salario, con +85%.",
+    "materia": "Apéndice EA2, Gráfico 3: Educación +85%, Habilidades +78%, Productividad +72%, Demanda +65% (escala ilustrativa de impacto en el salario).",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "La discriminación salarial se define como:",
+    "opts": [
+      "Pagar más a quien tiene mayor productividad",
+      "Pagar de forma diferente a personas por el mismo trabajo",
+      "Un beneficio adicional otorgado por antigüedad",
+      "Un tipo de negociación colectiva"
+    ],
+    "correct": 1,
+    "explain": "La discriminación salarial ocurre cuando a las personas se les paga de forma diferente por el mismo trabajo, generando un impacto negativo en la economía.",
+    "materia": "EA2 · 'Discriminación salarial y su impacto en la economía': se produce cuando a las personas se les paga de forma diferente por el mismo trabajo.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "¿Cuál de las siguientes NO es una consecuencia de la discriminación salarial mencionada en el material?",
+    "opts": [
+      "Pérdida de talento",
+      "Desigualdad de ingresos",
+      "Menor productividad",
+      "Mayor crecimiento del PIB"
+    ],
+    "correct": 3,
+    "explain": "Las tres consecuencias mencionadas son pérdida de talento, desigualdad de ingresos y menor productividad; un mayor crecimiento del PIB no es consecuencia de la discriminación, sino todo lo contrario.",
+    "materia": "EA2 · Gráfico 4 del Apéndice: consecuencias = 1) Pérdida de talento, 2) Desigualdad de ingresos, 3) Menor productividad.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "El coeficiente de Gini de Chile mencionado en el material (2024) es de:",
+    "opts": [
+      "0,18",
+      "0,27",
+      "0,44",
+      "0,82"
+    ],
+    "correct": 2,
+    "explain": "El material señala un coeficiente de Gini de 0,44 para Chile en 2024, una de las cifras más altas entre los países de la OCDE.",
+    "materia": "EA2 · Datos estadísticos destacados: Coeficiente de Gini = 0,44 (OCDE, 2024), una de las más altas entre países OCDE.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "¿A cuántas veces más ingreso promedio corresponde la educación universitaria frente a la secundaria, según el material?",
+    "opts": [
+      "1,5 veces",
+      "2,5 veces",
+      "3,5 veces",
+      "5 veces"
+    ],
+    "correct": 1,
+    "explain": "El material indica que los trabajadores con educación universitaria perciben en promedio 2,5 veces más ingresos que quienes tienen solo educación secundaria.",
+    "materia": "EA2 · Semana 8, Actividad 2: 'los trabajadores con educación universitaria perciben en promedio 2,5 veces más ingresos que aquellos con educación secundaria'.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "¿Cuál de las siguientes corresponde a un tipo de desempleo según el material?",
+    "opts": [
+      "Desempleo voluntario",
+      "Desempleo estructural",
+      "Desempleo compensatorio",
+      "Desempleo proporcional"
+    ],
+    "correct": 1,
+    "explain": "Los tres tipos de desempleo tratados en el curso son: friccional, estructural y cíclico. El desempleo estructural surge del desajuste entre habilidades disponibles y las requeridas por el mercado.",
+    "materia": "EA2 · Semana 9: tipos de desempleo — FRICCIONAL, ESTRUCTURAL, CÍCLICO.",
+    "section": "EA2 · Semana 9"
+  },
+  {
+    "q": "El desempleo estructural se origina principalmente por:",
+    "opts": [
+      "Fluctuaciones del ciclo económico global",
+      "Un desajuste entre las habilidades de los trabajadores y las demandas del mercado",
+      "Trabajadores en transición voluntaria entre empleos",
+      "Un exceso de vacantes disponibles"
+    ],
+    "correct": 1,
+    "explain": "El desempleo estructural ocurre cuando las habilidades de los trabajadores no coinciden con las demandas del mercado, por ejemplo por falta de formación en tecnología.",
+    "materia": "EA2 · Semana 9: ESTRUCTURAL — desajuste entre habilidades vs mercado, falta de formación en tecnología.",
+    "section": "EA2 · Semana 9"
+  },
+  {
+    "q": "Según los datos del material, la tasa de desempleo nacional en Chile (noviembre 2024) fue de:",
+    "opts": [
+      "6,5%",
+      "7,3%",
+      "8,2%",
+      "10,5%"
+    ],
+    "correct": 2,
+    "explain": "El material reporta una tasa de desocupación nacional de 8,2% para el trimestre móvil septiembre-noviembre de 2024, según cifras del INE.",
+    "materia": "EA2 · Semana 9: 'la tasa de desempleo nacional alcanzó un 8,2% en noviembre del 2024'. Fuente: INE.",
+    "section": "EA2 · Semana 9"
+  },
+  {
+    "q": "¿Qué región presentó, según el material, la tasa de desempleo más ALTA entre las mencionadas?",
+    "opts": [
+      "Región Metropolitana (7,3%)",
+      "Región de Atacama (10,5%)",
+      "Promedio nacional (8,2%)",
+      "Desempleo mujeres (9,2%)"
+    ],
+    "correct": 1,
+    "explain": "La región de Atacama presentó la tasa de desempleo más alta entre las regiones mencionadas, con 10,5%, muy por encima del 7,3% de la Región Metropolitana.",
+    "materia": "EA2 · Semana 9: 'Región de Atacama: desempleo = 10,5% / Región Metropolitana: desempleo = 7,3%'.",
+    "section": "EA2 · Semana 9"
+  },
+  {
+    "q": "La seguridad social, según el material, incluye como uno de sus tres pilares principales:",
+    "opts": [
+      "El salario mínimo",
+      "El seguro de desempleo",
+      "La negociación colectiva",
+      "La rotación laboral"
+    ],
+    "correct": 1,
+    "explain": "Los tres pilares de la seguridad social mencionados son: atención médica, pensiones y seguro de desempleo.",
+    "materia": "EA2 · Semana 10, Gráfico 7 del Apéndice: pilares = 1) Atención Médica, 2) Pensiones, 3) Seguro de Desempleo.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "¿Cuál de los siguientes es un DERECHO de los trabajadores según la legislación laboral tratada en el curso?",
+    "opts": [
+      "Cuidar el patrimonio de la empresa",
+      "Actuar con buena fe",
+      "Libertad sindical",
+      "Pagar el salario"
+    ],
+    "correct": 2,
+    "explain": "La libertad sindical es un derecho de los trabajadores. Cuidar el patrimonio y actuar con buena fe son deberes de los trabajadores; pagar el salario es un deber del empleador.",
+    "materia": "EA2 · Gráfico 8 del Apéndice: DERECHOS DE LOS TRABAJADORES incluye salario mínimo, horas de trabajo, vacaciones, licencias, seguridad laboral, libertad sindical.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "El proceso de diálogo entre sindicatos y empleadores para establecer condiciones de trabajo, salarios y beneficios se denomina:",
+    "opts": [
+      "Política de empleo",
+      "Negociación colectiva",
+      "Seguridad social",
+      "Discriminación salarial"
+    ],
+    "correct": 1,
+    "explain": "La negociación colectiva es el proceso de diálogo entre empresas y trabajadores (a través de sindicatos) para establecer condiciones laborales, salarios y beneficios.",
+    "materia": "EA2 · Semana 10: DEFINICIÓN — la negociación colectiva es un proceso de diálogo entre empresas y trabajadores para establecer condiciones laborales.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "¿Cuál de los siguientes es un BENEFICIO de la negociación colectiva para la EMPRESA?",
+    "opts": [
+      "Mayor productividad por motivación del personal",
+      "Aumento de costos operativos",
+      "Falta de experiencia negociadora",
+      "Desigualdad de poder"
+    ],
+    "correct": 0,
+    "explain": "Para la empresa, la negociación colectiva genera mayor productividad (por motivación y compromiso), mejor clima laboral y reducción de conflictos.",
+    "materia": "EA2 · Gráfico 9 del Apéndice: Beneficios para la empresa = 1) Mayor productividad, 2) Mejor clima laboral, 3) Reducción de conflictos.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "Según el material, la brecha salarial de género en Chile (2024) señala que las mujeres ganan en promedio:",
+    "opts": [
+      "10% más que los hombres",
+      "18% menos que los hombres",
+      "Lo mismo que los hombres",
+      "5% más que los hombres"
+    ],
+    "correct": 1,
+    "explain": "El material indica una brecha salarial de género de -18%, es decir, las mujeres ganan en promedio un 18% menos que los hombres por trabajos similares.",
+    "materia": "EA2 · Datos estadísticos destacados: 'Brecha salarial de género: -18% (mujeres vs hombres)'.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "El marco legal que regula la negociación colectiva y la formación de sindicatos en Chile corresponde principalmente a:",
+    "opts": [
+      "El Código Civil",
+      "El Código del Trabajo y la Ley de Negociación Colectiva",
+      "La Constitución Política exclusivamente",
+      "El Código Tributario"
+    ],
+    "correct": 1,
+    "explain": "El material señala que el marco legal de la negociación colectiva está regido por el Código del Trabajo y la Ley de Negociación Colectiva, junto con decretos supremos específicos.",
+    "materia": "EA2 · Semana 10: 'MARCO LEGAL: Regido por el Código del Trabajo y la Ley de Negociación Colectiva'.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "El precio, según el material, actúa fundamentalmente como:",
+    "opts": [
+      "Un impuesto sobre la producción",
+      "Un mecanismo de señalización para asignar recursos",
+      "Una barrera de entrada al mercado",
+      "Un subsidio estatal"
+    ],
+    "correct": 1,
+    "explain": "El precio funciona como mecanismo de señalización, guiando a consumidores y productores hacia una asignación eficiente de recursos escasos.",
+    "materia": "EA3 · Sección 01, 'Función del Precio': actúa como un mecanismo de señalización, guiando a consumidores y productores hacia una asignación eficiente de recursos.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "¿Cuál de los siguientes NO es un factor que determina la OFERTA, según el material?",
+    "opts": [
+      "Costos de producción",
+      "Tecnología",
+      "Expectativas sobre precios futuros",
+      "Preferencias de los consumidores"
+    ],
+    "correct": 3,
+    "explain": "Las preferencias de los consumidores afectan la DEMANDA, no la oferta. La oferta está determinada por costos de producción, tecnología y expectativas de precios futuros.",
+    "materia": "EA3 · Sección 01: OFERTA está influenciada por costos de producción, tecnología, expectativas sobre precios futuros. DEMANDA se ve afectada por preferencias, ingreso, precios relacionados.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "La curva de demanda tiene, característicamente:",
+    "opts": [
+      "Pendiente positiva",
+      "Pendiente negativa",
+      "Forma vertical siempre",
+      "Forma horizontal siempre"
+    ],
+    "correct": 1,
+    "explain": "La curva de demanda tiene pendiente negativa: a mayor precio, menor cantidad demandada (relación inversa entre precio y cantidad).",
+    "materia": "EA3 · Sección 02 / Gráfico 1: 'La curva de demanda tiene pendiente negativa: a mayor precio, menor cantidad demandada'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "Si el ingreso de los consumidores aumenta y esto hace que la demanda de un bien normal se desplace hacia la derecha, esto se debe a un cambio en:",
+    "opts": [
+      "El precio propio del bien",
+      "Un factor distinto al precio propio (el ingreso)",
+      "La cantidad ofrecida",
+      "Los costos de producción"
+    ],
+    "correct": 1,
+    "explain": "El desplazamiento de la curva de demanda ocurre por cambios en factores distintos al precio propio, como el ingreso, las preferencias o los precios de bienes relacionados.",
+    "materia": "EA3 · Sección 02, Gráfico 2: el desplazamiento de la demanda ocurre por cambios en factores distintos al precio propio (ingreso, preferencias, precios de bienes relacionados, expectativas).",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "La curva de oferta tiene característicamente:",
+    "opts": [
+      "Pendiente negativa",
+      "Pendiente positiva",
+      "Forma de U",
+      "Forma circular"
+    ],
+    "correct": 1,
+    "explain": "La curva de oferta tiene pendiente positiva: a mayor precio, mayor cantidad ofrecida (relación directa entre precio y cantidad ofrecida).",
+    "materia": "EA3 · Sección 03 / Gráfico 3: 'La curva de oferta (S) tiene pendiente positiva: a mayor precio, mayor cantidad ofrecida'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "En el ejemplo del mercado de helados del material, el precio y cantidad de equilibrio son:",
+    "opts": [
+      "$1.50 y 4 vasos",
+      "$2.00 y 7 vasos",
+      "$2.50 y 10 vasos",
+      "$2.00 y 10 vasos"
+    ],
+    "correct": 1,
+    "explain": "En el ejemplo del mercado de helados (Mankiw, 2017), el precio de equilibrio es $2.00 y la cantidad de equilibrio es 7 vasos.",
+    "materia": "EA3 · Sección 04, Gráfico 5: 'Precio de equilibrio = $2.00 | Cantidad de equilibrio = 7 vasos'. Fuente: Mankiw (2017), pág. 77.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "En el mercado de helados, cuando el precio es $2.50 (por encima del equilibrio), ¿qué ocurre?",
+    "opts": [
+      "Hay escasez, porque se demanda más de lo que se ofrece",
+      "Hay exceso de oferta (excedente), porque se ofrece más de lo que se demanda",
+      "El mercado permanece en equilibrio",
+      "Los consumidores compran toda la producción"
+    ],
+    "correct": 1,
+    "explain": "A $2.50, la cantidad demandada (4) es menor que la cantidad ofrecida (10), generando un excedente: los productores deben bajar el precio para vender el exceso.",
+    "materia": "EA3 · Sección 04, Gráfico 6: precio $2.50, cantidad demandada 4 < cantidad ofrecida 10 → EXCEDENTE. Los productores bajan el precio.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "En el mercado de helados, cuando el precio es $1.50 (por debajo del equilibrio), ¿qué ocurre?",
+    "opts": [
+      "Hay exceso de oferta",
+      "Hay escasez, porque la cantidad ofrecida es menor a la demandada",
+      "El precio sube automáticamente a $2.50",
+      "No hay ningún efecto en el mercado"
+    ],
+    "correct": 1,
+    "explain": "A $1.50, la cantidad ofrecida (4) es menor a la cantidad demandada (10), generando escasez: los vendedores suben el precio ante la alta demanda.",
+    "materia": "EA3 · Sección 04, Gráfico 7: precio $1.50, cantidad ofrecida 4 < cantidad demandada 10 → ESCASEZ. Los vendedores suben el precio.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "Según la cita de Mankiw (2017) incluida en el material, el equilibrio de mercado ocurre cuando:",
+    "opts": [
+      "El gobierno fija el precio",
+      "La cantidad que los compradores están dispuestos a comprar equivale exactamente a la que los vendedores están dispuestos a vender",
+      "La demanda supera siempre a la oferta",
+      "Existe un monopolio en el mercado"
+    ],
+    "correct": 1,
+    "explain": "La cita textual de Mankiw indica que en el precio de equilibrio, la cantidad que los compradores quieren y pueden comprar equivale exactamente a la que los vendedores quieren y pueden vender.",
+    "materia": "EA3 · Sección 04, cita clave de Mankiw (2017, pág. 77) sobre el equilibrio de mercado.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "La fórmula del Punto de Equilibrio empresarial (PE) es:",
+    "opts": [
+      "PE = CF / (PVU - CVU)",
+      "PE = CF × (PVU - CVU)",
+      "PE = PVU / CF",
+      "PE = CVU - CF"
+    ],
+    "correct": 0,
+    "explain": "El Punto de Equilibrio se calcula dividiendo los Costos Fijos por el Margen de Contribución Unitario (Precio de Venta Unitario menos Costo Variable Unitario).",
+    "materia": "EA3 · Sección 05: 'PE (unidades) = Costos Fijos / (Precio de Venta Unitario - Costo Variable Unitario)'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En el ejemplo de la panadería 'El Buen Pan' (CF=$5.000, PVU=$2.00, CVU=$0.80), ¿cuántos panes debe vender para llegar al punto de equilibrio?",
+    "opts": [
+      "2.500 panes",
+      "4.167 panes",
+      "5.000 panes",
+      "6.250 panes"
+    ],
+    "correct": 1,
+    "explain": "PE = $5.000 / ($2.00 - $0.80) = $5.000 / $1.20 = 4.167 panes (aproximado).",
+    "materia": "EA3 · Sección 05, ejemplo práctico: PE = $5.000 / $1.20 = 4.167 panes.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En la interpretación gráfica del punto de equilibrio, ¿qué zona representa el área a la IZQUIERDA del PE?",
+    "opts": [
+      "Zona de ganancia",
+      "Zona de pérdida",
+      "Zona de equilibrio permanente",
+      "Zona de costos fijos nulos"
+    ],
+    "correct": 1,
+    "explain": "A la izquierda del punto de equilibrio, los costos totales superan a las ventas, por lo que la empresa está en zona de pérdida.",
+    "materia": "EA3 · Sección 05, Gráfico 8: 'A la IZQUIERDA del PE: zona de PÉRDIDA. A la DERECHA del PE: zona de GANANCIA'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Una empresa fabrica mesas de oficina con PVU=$200, CVU=$80 y CF=$24.000. ¿Cuántas mesas debe vender para el punto de equilibrio?",
+    "opts": [
+      "100 mesas",
+      "150 mesas",
+      "200 mesas",
+      "300 mesas"
+    ],
+    "correct": 2,
+    "explain": "PE = $24.000 / ($200 - $80) = $24.000 / $120 = 200 mesas.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicio 2: PE = $24.000 / $120 = 200 mesas.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Siguiendo el ejercicio anterior (200 mesas de equilibrio), ¿cuáles son los ingresos en el punto de equilibrio?",
+    "opts": [
+      "$20.000",
+      "$24.000",
+      "$40.000",
+      "$48.000"
+    ],
+    "correct": 2,
+    "explain": "Ingresos PE = Cantidad PE × Precio de Venta = 200 × $200 = $40.000.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicio 3: Ingresos PE = 200 × $200 = $40.000.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Si los costos fijos de la empresa de mesas AUMENTAN de $24.000 a $30.000 (manteniendo PVU y CVU), el nuevo punto de equilibrio es:",
+    "opts": [
+      "200 mesas",
+      "220 mesas",
+      "250 mesas",
+      "300 mesas"
+    ],
+    "correct": 2,
+    "explain": "PE nuevo = $30.000 / ($200 - $80) = $30.000 / $120 = 250 mesas.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicio 4: PE nuevo = $30.000 / $120 = 250 mesas.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En el Ejercicio 5 de la guía (opción 1: bajar precio a $180 vs. opción 2: bajar costo variable a $70), ¿qué opción REDUCE MÁS el punto de equilibrio?",
+    "opts": [
+      "Opción 1 (bajar el precio)",
+      "Opción 2 (bajar el costo variable)",
+      "Ambas reducen el PE por igual",
+      "Ninguna cambia el PE"
+    ],
+    "correct": 1,
+    "explain": "La Opción 2 (reducir el costo variable a $70) da un PE ≈185 mesas, mejor que la Opción 1 (bajar el precio a $180) que da un PE de 240 mesas, es decir, empeora el resultado.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicio 5: Opción 1 → PE=240 (peor); Opción 2 → PE≈185 (mejor, porque aumenta el margen de contribución de $120 a $130).",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Una empresa de zapatillas vende a $50 con elasticidad-precio de -0,8 y evalúa subir el precio a $55. Según el análisis del material, la empresa:",
+    "opts": [
+      "No debería subir el precio, porque los ingresos caerían",
+      "Debería subir el precio, porque al ser inelástica, los ingresos aumentan",
+      "Debería bajar el precio en su lugar",
+      "Debería mantener el precio, pues no hay diferencia"
+    ],
+    "correct": 1,
+    "explain": "Con |ε|=0,8 < 1 (demanda inelástica), al subir el precio los ingresos aumentan de $500.000 a $506.000, por lo que la empresa sí debería subir el precio.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicio 6: demanda inelástica (|ε|=0,8), ingresos suben de $500.000 a $506.000 al subir el precio.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Un restaurante vende platos a $10 con elasticidad -1,5 y evalúa bajar el precio a $9. Según el análisis del material, el restaurante:",
+    "opts": [
+      "No debería bajar el precio, porque los ingresos caerían",
+      "Debería bajar el precio, porque al ser elástica, los ingresos aumentan",
+      "Debería subir el precio en su lugar",
+      "El cambio de precio no afecta los ingresos"
+    ],
+    "correct": 1,
+    "explain": "Con |ε|=1,5 > 1 (demanda elástica), al bajar el precio los ingresos aumentan de $5.000 a $5.175, por lo que el restaurante sí debería bajar el precio.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicio 7: demanda elástica (|ε|=1,5), ingresos suben de $5.000 a $5.175 al bajar el precio.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "La elasticidad precio de la demanda se calcula como:",
+    "opts": [
+      "Cambio % en el precio / Cambio % en la cantidad",
+      "Cambio % en la cantidad demandada / Cambio % en el precio",
+      "Precio final menos precio inicial",
+      "Cantidad final dividida por precio final"
+    ],
+    "correct": 1,
+    "explain": "La elasticidad precio de la demanda es el cambio porcentual en la cantidad demandada dividido por el cambio porcentual en el precio.",
+    "materia": "EA3 · Sección 06: 'Elasticidad precio de la demanda = (Cambio % cantidad demandada) / (Cambio % precio)'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Si |E| > 1, la demanda de un bien se clasifica como:",
+    "opts": [
+      "Perfectamente inelástica",
+      "Inelástica",
+      "Elástica",
+      "Unitaria"
+    ],
+    "correct": 2,
+    "explain": "Cuando el valor absoluto de la elasticidad es mayor a 1, la demanda es elástica: la cantidad cambia proporcionalmente más que el precio, indicando alta sensibilidad.",
+    "materia": "EA3 · Sección 06, tabla de interpretación: |E| > 1 → Elástica, indica ALTA sensibilidad.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Según la tabla de elasticidades por sector del apéndice, los medicamentos esenciales presentan una elasticidad:",
+    "opts": [
+      "Muy elástica",
+      "Elástica",
+      "Muy inelástica",
+      "Unitaria"
+    ],
+    "correct": 2,
+    "explain": "Los medicamentos esenciales presentan una demanda muy inelástica, ya que su consumo es constante independientemente del precio (son bienes de necesidad básica).",
+    "materia": "EA3 · Gráfico 10 del Apéndice: Salud - Medicamentos esenciales → Muy inelástica |E|<<1, demanda constante independiente del precio.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "¿Cuál de los siguientes factores AUMENTA la elasticidad de un bien, según el material?",
+    "opts": [
+      "Menor disponibilidad de sustitutos",
+      "Mayor disponibilidad de sustitutos",
+      "Ser un bien de primera necesidad",
+      "Un período de tiempo muy corto"
+    ],
+    "correct": 1,
+    "explain": "A mayor disponibilidad de sustitutos, generalmente mayor es la elasticidad del bien, ya que los consumidores pueden cambiar fácilmente de producto ante variaciones de precio.",
+    "materia": "EA3 · Sección 06, 'Factores que afectan la elasticidad': DISPONIBILIDAD DE SUSTITUTOS — más sustitutos implican mayor elasticidad.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "¿Cuál de las siguientes es una de las cuatro principales estructuras de mercado tratadas en el curso?",
+    "opts": [
+      "Duopolio puro",
+      "Competencia monopolística",
+      "Cartel internacional",
+      "Mercado negro"
+    ],
+    "correct": 1,
+    "explain": "Las cuatro estructuras de mercado son: Competencia Perfecta, Monopolio, Oligopolio y Competencia Monopolística.",
+    "materia": "EA3 · Sección 07: 'Las cuatro principales estructuras de mercado: 1. Competencia Perfecta, 2. Monopolio, 3. Oligopolio, 4. Competencia Monopolística'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En Competencia Perfecta, ¿cuántas empresas participan y qué tipo de producto se ofrece?",
+    "opts": [
+      "Una sola empresa, producto único",
+      "Pocas empresas, producto diferenciado",
+      "Muchas empresas, producto homogéneo",
+      "Muchas empresas, producto diferenciado"
+    ],
+    "correct": 2,
+    "explain": "En Competencia Perfecta hay muchos compradores y vendedores, productos homogéneos (idénticos) y ninguna barrera de entrada.",
+    "materia": "EA3 · Sección 07, Gráfico 11 del Apéndice: Competencia Perfecta → Muchas empresas, producto Homogéneo, Poder de mercado Ninguno, Barreras Ninguna.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En la estructura de Monopolio, el número de empresas y el poder de mercado son, respectivamente:",
+    "opts": [
+      "Muchas empresas, poder nulo",
+      "Una sola empresa, poder total",
+      "Pocas empresas, poder considerable",
+      "Muchas empresas, poder alguno"
+    ],
+    "correct": 1,
+    "explain": "En el Monopolio existe una única empresa que controla todo el mercado, con poder de mercado total y barreras a la entrada muy altas.",
+    "materia": "EA3 · Gráfico 11 del Apéndice: Monopolio → Una sola empresa, producto Único, Poder de Mercado Total, Barreras Muy Altas.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "El Oligopolio se caracteriza principalmente por:",
+    "opts": [
+      "Muchas empresas con productos homogéneos",
+      "Pocas empresas con alta interdependencia entre ellas",
+      "Una sola empresa dominante sin competencia",
+      "Ausencia total de barreras de entrada"
+    ],
+    "correct": 1,
+    "explain": "El Oligopolio se caracteriza por pocos vendedores que dominan la mayor parte de la oferta, generando alta interdependencia: las acciones de una empresa afectan significativamente a las demás.",
+    "materia": "EA3 · Estructura 3 - Oligopolio: 'Pocos vendedores que dominan la mayor parte de la oferta en un sector. Alta interdependencia entre las empresas'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "¿Cuál de las siguientes industrias es mencionada en el material como ejemplo de Oligopolio?",
+    "opts": [
+      "Mercado de trigo y maíz",
+      "Industria automotriz",
+      "Restaurantes locales",
+      "Mercado de joyería artesanal"
+    ],
+    "correct": 1,
+    "explain": "La industria automotriz, junto con telecomunicaciones, producción de bebidas, telefonía móvil e industria aérea, es un ejemplo de oligopolio mencionado en el material.",
+    "materia": "EA3 · Estructura 3 - Oligopolio, 'Ejemplos de Oligopolio': industria automotriz, telecomunicaciones, producción de bebidas, telefonía móvil, industria aérea.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En Competencia Monopolística, ¿qué elemento permite a las empresas tener cierto poder de mercado a pesar de haber muchos vendedores?",
+    "opts": [
+      "Barreras de entrada muy altas",
+      "La diferenciación del producto (calidad, marca, diseño)",
+      "El control total de los recursos naturales",
+      "La ausencia de publicidad"
+    ],
+    "correct": 1,
+    "explain": "En Competencia Monopolística, la diferenciación de productos (real o percibida, basada en calidad, marca, diseño, ubicación o servicio) otorga a las empresas cierto grado de poder de mercado.",
+    "materia": "EA3 · Estructura 4: 'Diferenciación basada en: calidad, marca, diseño, ubicación, servicio al cliente'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En Competencia Perfecta, en el largo plazo el precio de equilibrio (P*) es igual a:",
+    "opts": [
+      "El costo fijo total",
+      "El costo marginal (CMg)",
+      "El precio de descremado",
+      "El costo variable total"
+    ],
+    "correct": 1,
+    "explain": "En competencia perfecta, P* = CMg, lo que implica que las empresas obtienen solo ganancias normales (económicas = 0) en el largo plazo.",
+    "materia": "EA3 · Gráfico 12 del Apéndice: 'En competencia perfecta el precio de equilibrio (P*) es igual al costo marginal (CMg)'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "La estrategia de fijar un precio BAJO al lanzar un producto para ganar cuota de mercado rápidamente se llama:",
+    "opts": [
+      "Precios de descremado",
+      "Discriminación de precios",
+      "Precios de penetración",
+      "Precio de reserva"
+    ],
+    "correct": 2,
+    "explain": "Los precios de penetración consisten en establecer un precio bajo para ganar cuota de mercado rápidamente, típico en lanzamientos de productos tecnológicos o startups.",
+    "materia": "EA3 · Gráfico 13 del Apéndice: 'Precios de Penetración — Precio bajo para ganar cuota de mercado rápido'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "La estrategia de fijar un precio ALTO en las etapas iniciales del producto, dirigido a consumidores early adopters, se llama:",
+    "opts": [
+      "Precios de penetración",
+      "Precios de descremado",
+      "Discriminación de precios",
+      "Precio de equilibrio"
+    ],
+    "correct": 1,
+    "explain": "Los precios de descremado consisten en fijar un precio alto en las primeras etapas del producto, capturando a los consumidores early adopters dispuestos a pagar más.",
+    "materia": "EA3 · Gráfico 13 del Apéndice: 'Precios de Descremado — Precio alto en etapas iniciales del producto'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Cobrar precios distintos a diferentes segmentos según su disposición a pagar (como las aerolíneas) se denomina:",
+    "opts": [
+      "Precios de penetración",
+      "Precios de descremado",
+      "Discriminación de precios",
+      "Elasticidad unitaria"
+    ],
+    "correct": 2,
+    "explain": "La discriminación de precios consiste en cobrar precios diferentes según la disposición a pagar de cada segmento de consumidores, como hacen las aerolíneas según anticipación de compra.",
+    "materia": "EA3 · Gráfico 13 del Apéndice: 'Discriminación de Precios — Diferentes precios según disposición a pagar de cada segmento'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En el caso de estudio de NotCo (NotMayo), ¿en qué estructura de mercado compite la empresa, según la guía de respuesta?",
+    "opts": [
+      "Monopolio puro",
+      "Competencia perfecta",
+      "Competencia monopolística",
+      "Oligopolio cerrado"
+    ],
+    "correct": 2,
+    "explain": "Según la guía de respuesta del caso, NotCo compite en Competencia Monopolística, diferenciando 'NotMayo' mediante su origen vegetal, uso de IA y posicionamiento de marca sustentable.",
+    "materia": "EA3 · Caso NotCo, Pregunta 1: 'NotCo compite en un mercado de COMPETENCIA MONOPOLÍSTICA... logra diferenciar NotMayo mediante origen vegetal, IA, marca sustentable'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Según el caso NotCo, ¿qué estrategia de precio adoptó la empresa para su producto NotMayo?",
+    "opts": [
+      "Precios de descremado (muy por encima del mercado)",
+      "Precios competitivos, similares a las mayonesas tradicionales",
+      "Discriminación de precios por región",
+      "Precio subsidiado por el Estado"
+    ],
+    "correct": 1,
+    "explain": "NotCo adoptó una estrategia de precios competitiva, ofreciendo NotMayo a precios similares a las mayonesas convencionales pese a mayores costos de innovación.",
+    "materia": "EA3 · Caso NotCo: 'Adoptó una estrategia de precios COMPETITIVA, ofreciendo sus productos a precios similares a los de las mayonesas convencionales'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "El emprendimiento se define en el material como:",
+    "opts": [
+      "Un tipo de estructura de mercado",
+      "El proceso de crear un nuevo negocio asumiendo riesgos para generar valor",
+      "Una política pública de empleo",
+      "Un sinónimo de monopolio"
+    ],
+    "correct": 1,
+    "explain": "El emprendimiento es el proceso de crear un nuevo negocio o empresa, asumiendo riesgos para generar valor y crecimiento.",
+    "materia": "EA3 · Sección 08: 'EMPRENDIMIENTO — el proceso de crear un nuevo negocio o empresa, asumiendo riesgos para generar valor y crecimiento'.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "¿Cuál de las siguientes startups es mencionada como ejemplo de disrupción en el sector de transporte?",
+    "opts": [
+      "Airbnb",
+      "Uber",
+      "Spotify",
+      "NotCo"
+    ],
+    "correct": 1,
+    "explain": "Uber es mencionada como ejemplo de disrupción en transporte, aplicando la economía de plataforma a la movilidad urbana bajo demanda.",
+    "materia": "EA3 · 'Ejemplos de startups disruptivos': UBER — transformó el transporte con servicio de taxi a demanda; economía de plataforma aplicada a movilidad urbana.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "Spotify es mencionado en el material como ejemplo de disrupción porque:",
+    "opts": [
+      "Eliminó la música digital",
+      "Reemplazó la venta de álbumes por un modelo de suscripción",
+      "Creó el primer reproductor de CD",
+      "Aumentó el precio de los álbumes físicos"
+    ],
+    "correct": 1,
+    "explain": "Spotify cambió la forma de escuchar música ofreciendo acceso ilimitado mediante un modelo de suscripción que reemplazó la venta tradicional de álbumes.",
+    "materia": "EA3 · 'Ejemplos de startups disruptivos': SPOTIFY — modelo de suscripción que reemplazó la venta de álbumes.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "Para los emprendimientos que compiten con grandes empresas, el material recomienda como estrategia clave:",
+    "opts": [
+      "Competir exclusivamente bajando el precio al mínimo posible",
+      "Diferenciarse mediante calidad, personalización o experiencia de compra",
+      "Ignorar el marketing digital",
+      "Evitar el uso de promociones"
+    ],
+    "correct": 1,
+    "explain": "El material recomienda que los emprendedores se diferencien mediante calidad, personalización o experiencia de compra, en lugar de competir solo por precio contra economías de escala.",
+    "materia": "EA3 · 'Estrategia de fijación de precios para emprendimientos': diferenciarse a través de calidad, personalización o experiencia de compra es clave.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "¿Cuál es una VENTAJA competitiva de las economías emprendedoras mencionada en el material?",
+    "opts": [
+      "Menor innovación",
+      "Mayor productividad por procesos más eficientes",
+      "Reducción del PIB nacional",
+      "Menor crecimiento económico"
+    ],
+    "correct": 1,
+    "explain": "Las empresas innovadoras generalmente implementan procesos más eficientes, lo que se traduce en mayor productividad, una de las ventajas competitivas de las economías emprendedoras.",
+    "materia": "EA3 · 'Ventajas competitivas de las economías emprendedoras': MAYOR PRODUCTIVIDAD — procesos más eficientes.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "¿Cuál de los siguientes es un DESAFÍO que enfrentan los emprendedores según el material?",
+    "opts": [
+      "Exceso de financiamiento disponible",
+      "Acceso al financiamiento limitado",
+      "Ausencia total de competencia",
+      "Regulaciones simples y mínimas"
+    ],
+    "correct": 1,
+    "explain": "El acceso al financiamiento es uno de los principales desafíos que enfrentan los emprendedores, junto con la falta de infraestructura y regulaciones complejas.",
+    "materia": "EA3 · 'Desafíos que enfrentan los emprendedores': acceso al financiamiento, falta de infraestructura, regulaciones complejas.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "En el mercado laboral, ¿qué determina principalmente la oferta de trabajo según el material de EA2?",
+    "opts": [
+      "El salario y las preferencias individuales",
+      "El precio del capital",
+      "La tasa de interés del banco central",
+      "El tipo de cambio"
+    ],
+    "correct": 0,
+    "explain": "La oferta de trabajo está determinada principalmente por el salario y las preferencias individuales (como el valor del tiempo libre), además de educación y experiencia.",
+    "materia": "EA2 · 'Determinantes de la oferta de trabajo': SALARIO, PREFERENCIAS, y otros factores (educación, habilidades, experiencia).",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "¿Cuál de los siguientes conceptos corresponde a los tres elementos que determinan el problema económico fundamental?",
+    "opts": [
+      "Qué, cómo y para quién producir",
+      "Cuánto, cuándo y dónde vender",
+      "Importar, exportar y ahorrar",
+      "Producir, distribuir y destruir"
+    ],
+    "correct": 0,
+    "explain": "El problema económico fundamental se resume en tres preguntas: qué producir, cómo producir y para quién producir.",
+    "materia": "EA1 · 'El problema económico': ¿QUÉ PRODUCIR? ¿CÓMO PRODUCIR? ¿PARA QUIÉN PRODUCIR?",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "En el ejemplo de cálculo del PIB del material (C=70.000, I=32.000, G=70.000, X=20.500, M=14.500), el PIB (DA) es:",
+    "opts": [
+      "$164.000",
+      "$172.000",
+      "$178.000",
+      "$186.500"
+    ],
+    "correct": 2,
+    "explain": "DA = C + I + G + (X - M) = 70.000 + 32.000 + 70.000 + (20.500 - 14.500) = 172.000 + 6.000 = 178.000.",
+    "materia": "EA1 · 'Actividad de cierre: cálculo de PIB modelo DA': DA = C + I + G + (X - M) con los datos dados suma $178.000.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "En el ejemplo del país hipotético (C=500, I=200, G=300, X=150, M=100, en miles de millones), el PIB calculado es:",
+    "opts": [
+      "950 mil millones",
+      "1.000 mil millones",
+      "1.050 mil millones",
+      "1.150 mil millones"
+    ],
+    "correct": 2,
+    "explain": "PIB = C + I + G + (X - M) = 500 + 200 + 300 + (150 - 100) = 1.000 + 50 = 1.050 mil millones.",
+    "materia": "EA1 · 'Actividad 2: Relación entre DA y PIB', Parte 2: PIB = 500+200+300+(150-100) = 1.050 mil millones.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Un aumento en el gasto público para infraestructura, según el ejemplo del material, provoca en el corto plazo:",
+    "opts": [
+      "Una caída de la demanda agregada",
+      "Un desplazamiento de la DA hacia la derecha, aumentando la producción",
+      "Una recesión inmediata",
+      "Ningún efecto en el empleo"
+    ],
+    "correct": 1,
+    "explain": "El aumento en el gasto público genera más empleo y demanda de materiales, desplazando la DA hacia la derecha y aumentando la producción en el corto plazo.",
+    "materia": "EA1 · 'Equilibrio en el modelo de oferta y demanda agregada', ejemplo: 'un aumento en el gasto público para infraestructura genera más empleo... desplazando la DA hacia la derecha'.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Según el material, un resultado positivo (superávit) en la balanza comercial implica:",
+    "opts": [
+      "Endeudamiento frente al resto del mundo",
+      "Ingresos netos para la economía",
+      "Comercio equilibrado exactamente",
+      "Una devaluación automática de la moneda"
+    ],
+    "correct": 1,
+    "explain": "Un superávit en la balanza comercial implica ingresos netos para la economía; un déficit está asociado a endeudamiento frente al resto del mundo.",
+    "materia": "EA1 · 'Balanza comercial': 'Resultado positivo (superávit): implica ingresos netos para la economía'.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "Si la demanda de un bien aumenta (manteniendo constante la oferta), el nuevo equilibrio de mercado presenta, generalmente:",
+    "opts": [
+      "Menor precio y menor cantidad",
+      "Mayor precio y mayor cantidad",
+      "Mayor precio y menor cantidad",
+      "Menor precio y mayor cantidad"
+    ],
+    "correct": 1,
+    "explain": "Si la demanda se desplaza hacia la derecha (aumenta) con oferta constante, el nuevo equilibrio se produce a un precio mayor y una cantidad mayor.",
+    "materia": "EA3 · Gráfico 3 del Apéndice: al desplazarse D1 a D2 (aumento de demanda) sobre una curva de oferta S, el equilibrio pasa de P1/Q1 a P2/Q2, ambos mayores.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "¿Cuál de los siguientes factores desplazaría la curva de OFERTA hacia la IZQUIERDA (disminución)?",
+    "opts": [
+      "Una mejora tecnológica que reduce costos",
+      "Un aumento en el costo de las materias primas",
+      "Una reducción de impuestos a la producción",
+      "Un aumento en el número de productores"
+    ],
+    "correct": 1,
+    "explain": "Un aumento en los costos de producción (como materias primas) reduce la disposición de las empresas a ofrecer el bien al mismo precio, desplazando la oferta hacia la izquierda (disminución).",
+    "materia": "EA3 · Sección 03, Gráfico 4: 'Cambios en costos de producción... desplazan la curva de oferta. Flecha NARANJA (izquierda) = disminuye la oferta'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "Los cinco tipos de elasticidad mencionados en el material, de menor a mayor sensibilidad, terminan en:",
+    "opts": [
+      "Perfectamente inelástica y perfectamente elástica",
+      "Solo elástica e inelástica",
+      "Unitaria y perfectamente inelástica únicamente",
+      "Ninguna clasificación adicional existe"
+    ],
+    "correct": 0,
+    "explain": "El material clasifica cinco tipos: perfectamente inelástica (|E|=0), inelástica (|E|<1), unitaria (|E|=1), elástica (|E|>1) y perfectamente elástica (|E|=∞).",
+    "materia": "EA3 · Gráfico 9 del Apéndice: cinco tipos — Elástica, Inelástica, Unitaria, Perfectamente Elástica, Perfectamente Inelástica.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En la teoría del capital humano, ¿cuál es la fórmula conceptual del retorno de la inversión (ROI)?",
+    "opts": [
+      "ROI = Costos / Beneficios",
+      "ROI = (Beneficios futuros esperados – Costos de inversión) ÷ Costos de inversión",
+      "ROI = Beneficios × Costos",
+      "ROI = Salario mínimo / Salario de equilibrio"
+    ],
+    "correct": 1,
+    "explain": "El ROI del capital humano se mide como la diferencia entre los beneficios futuros esperados y los costos de inversión, dividida por los costos de inversión.",
+    "materia": "EA2 · 'Inversión en Capital Humano', fórmula conceptual del ROI Capital Humano.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "¿Cuál es la relación descrita en el material entre demanda agregada (DA) y PIB en el LARGO PLAZO?",
+    "opts": [
+      "Nunca son iguales",
+      "Son iguales solo en el largo plazo, después de ajustar el nivel de precios",
+      "Son iguales en todo momento sin excepción",
+      "No existe ninguna relación entre ambos"
+    ],
+    "correct": 1,
+    "explain": "El material señala que la demanda agregada es igual al PIB solo en el largo plazo, después de que los precios se ajustan completamente.",
+    "materia": "EA1 · 'Relación del PIB y la demanda agregada': 'La demanda agregada es igual al PIB solo en el largo plazo después de ajustar el nivel de precios'.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Un choque de oferta (por ejemplo, un desastre natural) provoca principalmente:",
+    "opts": [
+      "Un desplazamiento de la demanda agregada",
+      "Cambios en los costos de producción que afectan la oferta agregada",
+      "Un aumento automático del PIB potencial",
+      "Una reducción de la tasa de desempleo"
+    ],
+    "correct": 1,
+    "explain": "Los choques de oferta se refieren a cambios en costos de producción, desastres naturales o innovaciones tecnológicas que afectan directamente la oferta agregada.",
+    "materia": "EA1 · 'Desplazamiento de la oferta y demanda agregada': 'Choques de oferta: Cambios en costos de producción, desastres naturales o innovaciones tecnológicas'.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Según el material, ¿qué tipo de criptoactivo es Bitcoin según la clasificación de Wirex?",
+    "opts": [
+      "Privacy coin",
+      "Stablecoin",
+      "Payment currency",
+      "Security coin"
+    ],
+    "correct": 2,
+    "explain": "Según la clasificación de Wirex mencionada en el material, Bitcoin corresponde a una 'payment currency', usada para pagar bienes, servicios y cuentas.",
+    "materia": "EA1 · 'Tipos de criptoactivos (según Wirex)': '1. Payment currencies (ej. Bitcoin): Used to pay for goods, services and bills'.",
+    "section": "EA1 · Semana 5"
+  },
+  {
+    "q": "Según el material, ¿qué representan las 'stablecoins' como USDT y USDC?",
+    "opts": [
+      "Monedas cuyo valor fluctúa libremente sin respaldo",
+      "Un dólar digital privado, respaldado por instrumentos financieros estables",
+      "Un tipo de NFT exclusivo",
+      "Una criptomoneda descontinuada"
+    ],
+    "correct": 1,
+    "explain": "Las stablecoins como Tether (USDT) y Circle (USDC) funcionan como un dólar digital privado, con su valor pegado 1:1 al dólar y respaldado por instrumentos financieros estables y líquidos.",
+    "materia": "EA1 · 'Evolución de las criptomonedas': 'Tether (USDT) y Circle (USDC) son exitosos emisores privados de dólar digital... respalda su valor con instrumentos financieros estables y líquidos'.",
+    "section": "EA1 · Semana 5"
+  },
+  {
+    "q": "¿Qué porcentaje del empleo total en Chile corresponde a empleo informal, según el material?",
+    "opts": [
+      "Aproximadamente 10%",
+      "Aproximadamente 18%",
+      "Aproximadamente 27%",
+      "Aproximadamente 40%"
+    ],
+    "correct": 2,
+    "explain": "El material señala que el empleo informal representa cerca del 27% del empleo total en Chile, un indicador de precariedad laboral.",
+    "materia": "EA2 · Datos estadísticos destacados: 'Empleo informal: ~27% del total (Banco Central, 2024)'.",
+    "section": "EA2 · Semana 9"
+  },
+  {
+    "q": "En el caso de la empresa Lexus Tecnología (EA2), ¿qué aumento de eficiencia operativa generó la IA según la gerencia?",
+    "opts": [
+      "10%",
+      "15%",
+      "20%",
+      "25%"
+    ],
+    "correct": 2,
+    "explain": "Según la posición de la gerencia en el caso, la IA generó un incremento del 20% en la eficiencia operativa de la empresa Lexus Tecnología.",
+    "materia": "EA2 · Semana 10, Caso Lexus Tecnología: 'La IA ha generado un incremento del 20% en la eficiencia operativa'.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "En el mismo caso, ¿qué reducción de costos generó la implementación de IA?",
+    "opts": [
+      "5%",
+      "10%",
+      "15%",
+      "20%"
+    ],
+    "correct": 2,
+    "explain": "Según la gerencia de Lexus Tecnología, la implementación de IA generó una reducción del 15% en los costos operativos.",
+    "materia": "EA2 · Semana 10, Caso Lexus Tecnología: 'La IA ha generado una reducción del 15% en los costos'.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "En el gráfico de comparación de estructuras de mercado, ¿qué estructura tiene 'barreras de entrada bajas'?",
+    "opts": [
+      "Competencia Perfecta",
+      "Competencia Monopolística",
+      "Oligopolio",
+      "Monopolio"
+    ],
+    "correct": 1,
+    "explain": "Según la tabla comparativa, la Competencia Monopolística presenta barreras de entrada bajas, a diferencia de la Competencia Perfecta (ninguna barrera) y el Oligopolio/Monopolio (altas/muy altas).",
+    "materia": "EA3 · Gráfico 11 del Apéndice: Competencia Monopolística → Barreras de entrada: Bajas.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "El costo de oportunidad se define en el material como:",
+    "opts": [
+      "El costo total de producción de un bien",
+      "El valor del mejor uso alternativo de los recursos utilizados",
+      "El precio de mercado de un bien sustituto",
+      "La suma de todos los costos fijos y variables"
+    ],
+    "correct": 1,
+    "explain": "El costo de oportunidad es el valor del mejor uso alternativo de los recursos que se están utilizando; renunciar a esa alternativa es el costo de la elección tomada.",
+    "materia": "EA1 · 'Costo de oportunidad': 'el valor del mejor uso alternativo de los recursos que se están utilizando'.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "¿Qué representa un punto ubicado FUERA de la Frontera de Posibilidades de Producción (FPP)?",
+    "opts": [
+      "Una combinación eficiente",
+      "Una combinación ineficiente pero alcanzable",
+      "Una combinación imposible con los recursos actuales",
+      "El punto de equilibrio de mercado"
+    ],
+    "correct": 2,
+    "explain": "Los puntos fuera de la FPP (como el punto C en el gráfico del apéndice) representan combinaciones imposibles de alcanzar con los recursos disponibles actualmente.",
+    "materia": "Apéndice Gráfico 1 (EA1): Punto C → 'Imposible – fuera de la frontera (inalcanzable con recursos actuales)'.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "¿Cuál de los siguientes es uno de los tres elementos base del sistema Bitcoin descritos en el 'Consenso Nakamoto'?",
+    "opts": [
+      "Un banco central regulador",
+      "Un libro de contabilidad seguro",
+      "Una tasa de interés fija",
+      "Un impuesto a la minería"
+    ],
+    "correct": 1,
+    "explain": "El Consenso Nakamoto se basa en un libro de contabilidad seguro (que previene el doble gasto), un consenso distribuido mediante minería, y una moneda valiosa que incentiva la honestidad de los nodos.",
+    "materia": "EA1 · 'Consenso Nakamoto': 'Libro de contabilidad seguro → Previene el doble gasto, asegurando que la moneda tenga valor'.",
+    "section": "EA1 · Semana 5"
+  }
+];
+
+// ================= VERDADERO / FALSO (25) =================
+const VF = [
+  {
+    "q": "La curva de demanda tiene pendiente negativa: a mayor precio, menor cantidad demandada.",
+    "correct": true,
+    "explain": "Verdadero. Es la ley de la demanda: existe una relación inversa entre precio y cantidad demandada.",
+    "materia": "EA3 · Sección 02: 'Características de la curva de demanda: Tiene PENDIENTE NEGATIVA. Relación inversa entre precio y cantidad demandada'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "La curva de oferta tiene pendiente negativa: a mayor precio, menor cantidad ofrecida.",
+    "correct": false,
+    "explain": "Falso. La curva de oferta tiene pendiente POSITIVA: a mayor precio, mayor cantidad ofrecida por los productores.",
+    "materia": "EA3 · Sección 03: 'Características de la curva de oferta: Tiene PENDIENTE POSITIVA. Relación directa entre precio y cantidad ofrecida'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "En el punto de equilibrio de mercado, la cantidad demandada es igual a la cantidad ofrecida.",
+    "correct": true,
+    "explain": "Verdadero. El equilibrio de mercado es precisamente el punto donde ambas cantidades coinciden, como en la cita de Mankiw citada en el material.",
+    "materia": "EA3 · Sección 04: 'el equilibrio de mercado es la situación en la que el precio de mercado ha llegado al nivel en el cual la cantidad ofrecida equivale a la cantidad demandada'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "Un precio de mercado por ENCIMA del precio de equilibrio genera escasez.",
+    "correct": false,
+    "explain": "Falso. Un precio por encima del equilibrio genera EXCESO DE OFERTA (excedente), no escasez. La escasez ocurre cuando el precio está por DEBAJO del equilibrio.",
+    "materia": "EA3 · Sección 04, Gráfico 6: precio $2.50 (sobre el equilibrio) genera excedente, no escasez.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "El punto de equilibrio empresarial se calcula como Costos Fijos dividido por el margen de contribución unitario.",
+    "correct": true,
+    "explain": "Verdadero. PE = CF / (PVU - CVU), donde (PVU-CVU) es el margen de contribución unitario.",
+    "materia": "EA3 · Sección 05: 'PE = CF / Margen de Contribución Unitario'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "A la derecha del punto de equilibrio empresarial se encuentra la zona de pérdida.",
+    "correct": false,
+    "explain": "Falso. A la derecha del punto de equilibrio está la zona de GANANCIA; la zona de pérdida está a la izquierda.",
+    "materia": "EA3 · Gráfico 8 del Apéndice: 'A la IZQUIERDA del PE: zona de PÉRDIDA. A la DERECHA del PE: zona de GANANCIA'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Si la elasticidad precio de la demanda de un bien es |E|=0, se dice que la demanda es perfectamente inelástica.",
+    "correct": true,
+    "explain": "Verdadero. Cuando |E|=0, la cantidad demandada no cambia ante variaciones de precio: se trata de una demanda perfectamente inelástica.",
+    "materia": "EA3 · Sección 06, tabla de interpretación: 'Perfectamente inelástica |E|=0 — La cantidad NO cambia ante variaciones de precio'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Los bienes de lujo, como las joyas, suelen presentar una demanda muy inelástica según el material.",
+    "correct": false,
+    "explain": "Falso. Según la tabla de elasticidades por sector, los bienes de lujo como las joyas presentan una demanda MUY ELÁSTICA, no inelástica.",
+    "materia": "EA3 · Gráfico 10 del Apéndice: 'Lujo - Joyas → Muy elástica |E|>>1'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "En Competencia Perfecta, las empresas pueden fijar libremente el precio por encima del costo marginal.",
+    "correct": false,
+    "explain": "Falso. En Competencia Perfecta el precio de equilibrio es igual al costo marginal (P*=CMg); las empresas no tienen poder para fijar precios por encima de este nivel en el largo plazo.",
+    "materia": "EA3 · Gráfico 12 del Apéndice: 'En competencia perfecta el precio de equilibrio (P*) es igual al costo marginal (CMg)'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "El oligopolio se caracteriza por la presencia de muchas empresas con productos homogéneos y sin interdependencia.",
+    "correct": false,
+    "explain": "Falso. El oligopolio se caracteriza por POCAS empresas con ALTA interdependencia entre ellas; no por muchas empresas ni ausencia de interdependencia.",
+    "materia": "EA3 · Estructura 3 - Oligopolio: 'Pocos vendedores que dominan la mayor parte de la oferta... Alta interdependencia entre las empresas'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "La estrategia de precios de penetración consiste en fijar un precio bajo al lanzar un producto para ganar cuota de mercado rápidamente.",
+    "correct": true,
+    "explain": "Verdadero. Los precios de penetración buscan ganar cuota de mercado rápidamente ofreciendo un precio bajo, subiendo el precio gradualmente después.",
+    "materia": "EA3 · Gráfico 13 del Apéndice: 'Precios de Penetración — Precio bajo para ganar cuota de mercado rápido'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "NotCo, según el caso de estudio del curso, compite en un mercado de Monopolio puro con su producto NotMayo.",
+    "correct": false,
+    "explain": "Falso. Según la guía de respuesta del caso, NotCo compite en Competencia Monopolística, ya que existen numerosos competidores (Hellmann's, Kraft, marcas propias) pero NotCo logra diferenciarse.",
+    "materia": "EA3 · Caso NotCo, Pregunta 1: 'NotCo compite en un mercado de COMPETENCIA MONOPOLÍSTICA'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "El emprendimiento implica asumir riesgos para generar valor y crecimiento mediante la creación de un nuevo negocio.",
+    "correct": true,
+    "explain": "Verdadero. Esta es exactamente la definición de emprendimiento entregada en el material del curso.",
+    "materia": "EA3 · Sección 08: 'EMPRENDIMIENTO: El proceso de crear un nuevo negocio o empresa, asumiendo riesgos para generar valor y crecimiento'.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "Airbnb es mencionado en el material como ejemplo de disrupción en la industria de la música.",
+    "correct": false,
+    "explain": "Falso. Airbnb es mencionado como ejemplo de disrupción en el sector HOTELERO. Spotify es el ejemplo de disrupción en la industria de la música.",
+    "materia": "EA3 · 'Ejemplos de startups disruptivos': AIRBNB revolucionó el sector hotelero; SPOTIFY cambió la forma de escuchar música.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "El PIB puede calcularse mediante el método del gasto, el método del ingreso y el método del valor añadido.",
+    "correct": true,
+    "explain": "Verdadero. El material describe estos tres métodos equivalentes para calcular el PIB de una economía.",
+    "materia": "EA1 · 'Producto Interno Bruto (PIB)': MÉTODO DEL GASTO, MÉTODO DEL INGRESO, MÉTODO DEL VALOR AÑADIDO.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "La Oferta Agregada de Largo Plazo (OALP) tiene forma horizontal, ya que los precios no afectan la producción.",
+    "correct": false,
+    "explain": "Falso. La OALP es VERTICAL en el nivel de PIB potencial, no horizontal, ya que en el largo plazo la producción depende de los recursos y la tecnología disponibles, no del nivel de precios.",
+    "materia": "EA1 · 'La Oferta Agregada (OA)': 'LARGO PLAZO (OALP): la curva es vertical en el nivel de PIB potencial'.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "La macroeconomía estudia el comportamiento económico al nivel más desagregado, como personas y empresas individuales.",
+    "correct": false,
+    "explain": "Falso. Eso corresponde a la MICROECONOMÍA. La macroeconomía busca explicar el funcionamiento del sistema económico como un todo.",
+    "materia": "EA1 · 'Economía se divide en': MICROECONOMÍA = nivel más desagregado; MACROECONOMÍA = sistema como un todo.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "Un aumento sostenido y generalizado del nivel de precios en una economía se denomina inflación.",
+    "correct": true,
+    "explain": "Verdadero. Esta es la definición de inflación entregada en el material del curso.",
+    "materia": "EA1 · 'Inflación: conceptos y medición IPC': 'La inflación es un aumento generalizado y sostenido del nivel de precios de los bienes y servicios en una economía'.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "La apreciación de una moneda ocurre cuando su valor DISMINUYE con respecto a otra moneda.",
+    "correct": false,
+    "explain": "Falso. La apreciación ocurre cuando el valor de una moneda AUMENTA con respecto a otra; cuando disminuye, se denomina depreciación.",
+    "materia": "EA1 · 'Tipo de cambio y balanza de pagos': 'APRECIACIÓN: Cuando el valor de una moneda aumenta con respecto a otra'.",
+    "section": "EA1 · Semana 4"
+  },
+  {
+    "q": "El desempleo cíclico está asociado a las fluctuaciones del ciclo económico, como las recesiones.",
+    "correct": true,
+    "explain": "Verdadero. El desempleo cíclico se relaciona directamente con las fases de expansión y contracción de la economía.",
+    "materia": "EA1 · 'Desempleo: tipos y causas': 'DESEMPLEO CÍCLICO: Fluctuaciones del empleo causadas por las recesiones económicas'.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "La oferta de trabajo tiene una relación inversa con el nivel salarial: a mayor salario, menos personas están dispuestas a trabajar.",
+    "correct": false,
+    "explain": "Falso. La oferta de trabajo tiene una relación POSITIVA con el salario: a mayor salario, más personas están dispuestas a trabajar.",
+    "materia": "EA2 · Glosario: 'OFERTA DE TRABAJO: Cantidad de personas dispuestas a trabajar a un salario determinado. Relación positiva con el nivel salarial'.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "En el ejemplo del mercado laboral del material, el equilibrio se alcanza a un salario de 20 euros/hora con 420 trabajadores.",
+    "correct": true,
+    "explain": "Verdadero. En esa tabla, tanto la oferta como la demanda de trabajo coinciden exactamente en 420 a un salario de 20 euros/hora.",
+    "materia": "EA2 · Gráfico 2 del Apéndice: a 20 euros/hora, Oferta=420=Demanda → EQUILIBRIO.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "La discriminación salarial, según el material, mejora la productividad general de la economía.",
+    "correct": false,
+    "explain": "Falso. La discriminación salarial reduce la productividad, ya que desperdicia el potencial de las personas discriminadas y limita el acceso al talento.",
+    "materia": "EA2 · 'Discriminación salarial': consecuencias incluyen 'Menor productividad — se desperdicia el potencial de las personas'.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "El coeficiente de Gini varía entre 0 (perfecta igualdad) y 1 (perfecta desigualdad).",
+    "correct": true,
+    "explain": "Verdadero. Así se define el coeficiente de Gini en el glosario del material; Chile presenta un valor de 0,44.",
+    "materia": "EA2 · Glosario: 'COEFICIENTE DE GINI: Medida estadística de la desigualdad... Varía entre 0 (perfecta igualdad) y 1 (perfecta desigualdad)'.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "La negociación colectiva en Chile está regida únicamente por acuerdos informales entre trabajadores y empleadores, sin marco legal.",
+    "correct": false,
+    "explain": "Falso. La negociación colectiva está regida por el Código del Trabajo y la Ley de Negociación Colectiva, además de decretos supremos específicos.",
+    "materia": "EA2 · Semana 10: 'MARCO LEGAL: Regido por el Código del Trabajo y la Ley de Negociación Colectiva'.",
+    "section": "EA2 · Semana 10"
+  }
+];
+
+// ================= DESARROLLO (25) =================
+const DESARROLLO = [
+  {
+    "q": "Explique con sus palabras el concepto de 'escasez' en economía y por qué obliga a las sociedades a elegir.",
+    "guide": "Una buena respuesta debe mencionar: (1) los recursos productivos (tierra, trabajo, capital) son limitados; (2) las necesidades y deseos humanos son ilimitados; (3) esta brecha obliga a las personas y sociedades a elegir entre alternativas, renunciando a algunas para obtener otras (costo de oportunidad).",
+    "materia": "EA1 · 'La economía como estudio': ESCASEZ — los recursos disponibles son limitados, mientras que las necesidades humanas son ilimitadas. ELECCIÓN — las personas tienen que elegir entre alternativas.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "Describa las tres preguntas fundamentales del 'problema económico' y dé un ejemplo de cada una.",
+    "guide": "Debe explicar: ¿QUÉ producir? (decidir qué bienes/servicios producir según preferencias y recursos), ¿CÓMO producir? (elegir métodos de producción eficientes) y ¿PARA QUIÉN producir? (determinar quién se beneficia, considerando distribución y justicia social). Ejemplos: una fábrica decidiendo qué bien fabricar, qué tecnología usar, y a qué segmento vender.",
+    "materia": "EA1 · 'El problema económico': ¿QUÉ PRODUCIR? ¿CÓMO PRODUCIR? ¿PARA QUIÉN PRODUCIR?",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "Explique qué representa la Frontera de Posibilidades de Producción (FPP) y qué significan los puntos dentro, sobre y fuera de ella.",
+    "guide": "La FPP muestra las combinaciones máximas de dos bienes que una economía puede producir con recursos dados. Puntos SOBRE la frontera: producción eficiente (todos los recursos utilizados). Puntos DENTRO: ineficiencia (recursos ociosos). Puntos FUERA: imposibles con los recursos actuales. También debe mencionar que un desplazamiento de la FPP hacia afuera representa crecimiento económico.",
+    "materia": "EA1 · 'Frontera de Posibilidades de Producción (FPP)' y Gráficos 1 y 2 del Apéndice.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "Describa el modelo de Flujo Circular de la Renta, identificando los agentes económicos y los dos mercados en que interactúan.",
+    "guide": "Debe identificar a HOGARES (compran bienes/servicios, venden factores de producción) y EMPRESAS (venden bienes/servicios, compran factores). Los dos mercados son: Mercado de Bienes y Servicios (empresas venden, hogares compran) y Mercado de Factores de Producción (hogares venden tierra/trabajo/capital, empresas compran). Debe mencionar el flujo real (bienes y factores) y el flujo monetario (ingresos y gastos).",
+    "materia": "EA1 · 'Modelo de diagrama: Flujo circular de la renta' y Gráfico 3 del Apéndice.",
+    "section": "EA1 · Semana 1"
+  },
+  {
+    "q": "A partir de la ecuación DA = C + I + G + (X - M), explique qué representa cada componente y dé un ejemplo de política que afecte a G.",
+    "guide": "C=Consumo de hogares, I=Inversión empresarial y en vivienda, G=Gasto público, X=Exportaciones, M=Importaciones. Ejemplo de política que afecta G: un aumento del gasto público en infraestructura vial, que además desplaza la DA hacia la derecha en el corto plazo, generando empleo y producción adicional.",
+    "materia": "EA1 · 'La Demanda Agregada (DA)': DA = C + I + G + (X - M) y ejemplo de estímulo fiscal mediante gasto público.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Explique la diferencia entre los efectos de la demanda agregada en el corto plazo y en el largo plazo.",
+    "guide": "En el CORTO PLAZO, cambios en la DA generan fluctuaciones en el PIB real y en los precios (un aumento de DA eleva producción y precios; una caída provoca recesión y desempleo). En el LARGO PLAZO, la economía se ajusta al PIB potencial, por lo que un aumento en la DA solo eleva los precios sin incrementar la producción real (ejemplo: imprimir más dinero genera inflación, no más producción).",
+    "materia": "EA1 · 'Equilibrio en el modelo de oferta y demanda agregada': corto plazo vs. largo plazo.",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Un país tiene C=70.000, I=32.000, G=70.000, Exportaciones=20.500 e Importaciones=14.500. Calcule el PIB y explique qué ocurriría si el gasto público aumentara a 72.000.",
+    "guide": "PIB = C+I+G+(X-M) = 70.000+32.000+70.000+(20.500-14.500) = 178.000. Si G aumenta a 72.000, el nuevo PIB sería 180.000 (aumento de 2.000 u.m.), reflejando que un mayor gasto público expande la demanda agregada y, por tanto, el PIB, manteniendo todo lo demás constante.",
+    "materia": "EA1 · 'Actividad de cierre: Cálculo de PIB modelo DA', pregunta (e).",
+    "section": "EA1 · Semana 2"
+  },
+  {
+    "q": "Explique qué es el IPC, cómo se mide y mencione al menos dos usos prácticos de este indicador en Chile.",
+    "guide": "El IPC (Índice de Precios al Consumidor) mide la variación mensual de precios de una canasta de bienes y servicios consumidos por los hogares. Usos: (1) insumo para que el Banco Central defina la tasa de política monetaria; (2) determinar la evolución de la UF y la UTM; (3) reajustar tarifas de servicios básicos como electricidad.",
+    "materia": "EA1 · '¿Qué es el IPC?' y '¿Para qué se utiliza el IPC?'.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "Explique cómo afectan las tasas de interés a la inversión, el consumo y el valor del dinero en el tiempo.",
+    "guide": "Tasas bajas: estimulan la inversión (menor costo de financiamiento) y el consumo (menor costo de endeudarse). Tasas altas: desalientan ambas variables y hacen que el valor del dinero futuro sea mayor que el valor actual (incentivan el ahorro sobre el consumo presente).",
+    "materia": "EA1 · 'Tasas de interés: rol y efectos en la economía'.",
+    "section": "EA1 · Semana 3"
+  },
+  {
+    "q": "Describa el proceso de una transacción de Bitcoin en 6 pasos, según el material del curso.",
+    "guide": "1) Iniciación: A quiere enviar un criptoactivo a B. 2) Creación del bloque: la transacción forma parte de un bloque. 3) Distribución: el bloque llega a todos los nodos de la red. 4) Validación: los nodos aprueban la transacción. 5) Registro permanente: el bloque se añade a la cadena. 6) Transferencia completada: el dinero se mueve de A a B, de forma verificada y segura.",
+    "materia": "EA1 · Gráfico 5 del Apéndice: 'Proceso de Transacción Bitcoin (6 Pasos)'.",
+    "section": "EA1 · Semana 5"
+  },
+  {
+    "q": "Explique las tres características principales de la tecnología blockchain (pública, inmutable y descentralizada).",
+    "guide": "PÚBLICA: es un libro digital de contabilidad de triple entrada, auditable por cualquiera, lo que da transparencia total. INMUTABLE: una vez confirmado un bloque, los registros no se pueden eliminar ni alterar, garantizando seguridad frente a falsificaciones. DESCENTRALIZADA: la gobernanza y operación se distribuye entre múltiples nodos, eliminando el riesgo de contraparte y puntos únicos de falla.",
+    "materia": "EA1 · 'Blockchain como criptotecnología base' y Gráfico 8 del Apéndice.",
+    "section": "EA1 · Semana 5"
+  },
+  {
+    "q": "Explique la diferencia entre oferta de trabajo y demanda de trabajo, y describa qué ocurre en el equilibrio del mercado laboral.",
+    "guide": "Oferta de trabajo: cantidad de personas dispuestas a trabajar a un salario determinado (relación positiva con el salario). Demanda de trabajo: cantidad de trabajadores que las empresas están dispuestas a contratar a un salario determinado (relación negativa con el salario). El equilibrio ocurre cuando ambas cantidades se igualan, determinando el salario y la cantidad de equilibrio (ej.: 20 euros/hora y 420 trabajadores en el ejemplo del material).",
+    "materia": "EA2 · Semana 7: 'Conceptos básicos de oferta y demanda de trabajo' y 'Equilibrio en el mercado laboral'.",
+    "section": "EA2 · Semana 7"
+  },
+  {
+    "q": "Explique el concepto de capital humano y describa al menos dos costos y dos beneficios de invertir en él.",
+    "guide": "El capital humano son las capacidades, conocimientos y habilidades de las personas. COSTOS: matrícula/materiales, tiempo dedicado al estudio, costo de oportunidad de no trabajar. BENEFICIOS: mayores ingresos futuros, mejores oportunidades laborales, mayor satisfacción y calidad de vida. Puede mencionar la fórmula conceptual de ROI del capital humano.",
+    "materia": "EA2 · Semana 8: 'Introducción al capital humano' e 'Inversión en Capital Humano: costos y beneficios'.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "Explique qué es la discriminación salarial y describa sus tres consecuencias principales según el material.",
+    "guide": "La discriminación salarial ocurre cuando se paga diferente por el mismo trabajo (por ejemplo, según género). Consecuencias: (1) Pérdida de talento — personas capaces no acceden a oportunidades; (2) Desigualdad de ingresos — se amplía la brecha entre grupos discriminados y privilegiados; (3) Menor productividad — se desperdicia el potencial de las personas, reduciendo la eficiencia de la economía.",
+    "materia": "EA2 · Semana 8, Gráfico 4 del Apéndice: 'Consecuencias de la Discriminación Salarial'.",
+    "section": "EA2 · Semana 8"
+  },
+  {
+    "q": "Describa los tres pilares de la seguridad social mencionados en el material y su impacto tanto en el trabajador como en la empresa.",
+    "guide": "1) Atención médica: mejora la salud del trabajador y reduce el ausentismo, aumentando la productividad para la empresa. 2) Pensiones: asegura ingreso post-retiro (trabajador) y fideliza/mejora employer branding (empresa). 3) Seguro de desempleo: da ingreso temporal en periodos sin trabajo, mejorando el clima laboral y reduciendo conflictos en la empresa.",
+    "materia": "EA2 · Semana 10, Gráfico 7 del Apéndice: 'Seguridad Social: Beneficios e Impacto'.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "Explique qué es la negociación colectiva y mencione dos beneficios para la empresa y dos para los trabajadores.",
+    "guide": "Es un proceso de diálogo entre sindicatos y empleadores para establecer condiciones laborales, salarios y beneficios. Beneficios para la empresa: mayor productividad (motivación/compromiso) y mejor clima laboral. Beneficios para los trabajadores: mejores condiciones laborales (salarios justos, horarios flexibles) y mayor seguridad laboral (protección contra despidos injustificados).",
+    "materia": "EA2 · Semana 10, Gráficos 9 del Apéndice: 'Negociación Colectiva: Beneficios para Empresa y Trabajadores'.",
+    "section": "EA2 · Semana 10"
+  },
+  {
+    "q": "Explique la función del precio en la economía y los tres factores principales que lo determinan.",
+    "guide": "El precio actúa como mecanismo de señalización que guía a consumidores y productores hacia una asignación eficiente de recursos. Los tres factores principales: (1) Oferta — cantidad que los vendedores están dispuestos a ofrecer, según costos, tecnología y expectativas; (2) Demanda — cantidad que los compradores están dispuestos a adquirir, según preferencias, ingreso y precios relacionados; (3) Costos — de materiales, mano de obra, transporte, etc.",
+    "materia": "EA3 · Sección 01: 'Función del Precio' y 'Factores que determinan los precios'.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "Usando el ejemplo del mercado de helados del material, explique qué ocurre cuando el precio de mercado está por ENCIMA y por DEBAJO del precio de equilibrio.",
+    "guide": "El equilibrio es $2.00 con 7 vasos. Si el precio sube a $2.50 (por encima), la cantidad demandada cae a 4 y la ofrecida sube a 10: se genera un EXCEDENTE, y los productores deben bajar el precio. Si el precio baja a $1.50 (por debajo), la cantidad ofrecida cae a 4 y la demandada sube a 10: se genera ESCASEZ, y los vendedores suben el precio ante la alta demanda.",
+    "materia": "EA3 · Sección 04, Gráficos 5, 6 y 7 del Apéndice: mercado de helados en vaso.",
+    "section": "EA3 · Semana 12"
+  },
+  {
+    "q": "Calcule el punto de equilibrio de una empresa con Costos Fijos = $24.000, Precio de Venta Unitario = $200 y Costo Variable Unitario = $80. Explique el significado del resultado.",
+    "guide": "PE = $24.000 / ($200-$80) = $24.000/$120 = 200 unidades. Esto significa que la empresa debe vender 200 unidades para que sus ingresos totales igualen exactamente sus costos totales, sin pérdidas ni ganancias; por encima de esa cantidad la empresa comienza a generar utilidades.",
+    "materia": "EA3 · Guía de Ejercicios, Ejercicios 2 y 3: cálculo del punto de equilibrio en unidades e ingresos.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Explique el concepto de elasticidad precio de la demanda y qué determina si una empresa debería subir o bajar sus precios.",
+    "guide": "La elasticidad mide la sensibilidad de la cantidad demandada ante cambios en el precio (Cambio %Q / Cambio %P). Si |E|<1 (inelástica), subir el precio AUMENTA los ingresos totales (la caída de cantidad es proporcionalmente menor). Si |E|>1 (elástica), bajar el precio AUMENTA los ingresos totales (el aumento de cantidad supera proporcionalmente la caída de precio). La empresa debe conocer la elasticidad de su producto antes de decidir cambios de precio.",
+    "materia": "EA3 · Sección 06 y Guía de Ejercicios, Ejercicios 6 y 7: decisiones de precio según elasticidad.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Describa las cuatro estructuras de mercado (competencia perfecta, monopolio, oligopolio y competencia monopolística) en términos de número de empresas y poder de mercado.",
+    "guide": "Competencia Perfecta: muchas empresas, producto homogéneo, ningún poder de mercado, sin barreras de entrada. Competencia Monopolística: muchas empresas, producto diferenciado, algún poder de mercado, barreras bajas. Oligopolio: pocas empresas, producto homogéneo o diferenciado, poder considerable, barreras altas. Monopolio: una sola empresa, producto único, poder total, barreras muy altas.",
+    "materia": "EA3 · Sección 07 y Gráfico 11 del Apéndice: comparación de las cuatro estructuras de mercado.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Analice el caso de NotCo y su producto NotMayo: identifique la estructura de mercado en que compite y explique la estrategia de precios utilizada.",
+    "guide": "NotCo compite en Competencia Monopolística: aunque existen muchos competidores de mayonesas (Hellmann's, Kraft, marcas propias), NotCo se diferencia por su origen 100% vegetal, uso de IA para replicar sabor/textura, y posicionamiento de marca sustentable. Su estrategia de precios es COMPETITIVA: fija precios similares a las mayonesas tradicionales, pese a mayores costos de I+D, para atraer consumidores sin imponer una prima de precio significativa.",
+    "materia": "EA3 · Caso NotCo, Preguntas 1 y 2: estructura de mercado y estrategia de precios.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Explique las tres estrategias de fijación de precios (penetración, descremado y discriminación de precios) y dé un ejemplo de cada una.",
+    "guide": "Penetración: precio bajo al lanzamiento para ganar cuota de mercado rápido (ej.: producto tecnológico económico que luego sube de precio). Descremado: precio alto en etapas iniciales dirigido a early adopters (ej.: nuevo smartphone premium al lanzamiento). Discriminación de precios: precios distintos según disposición a pagar de cada segmento (ej.: aerolíneas que cobran diferente según anticipación de compra y tipo de boleto).",
+    "materia": "EA3 · Sección 07 y Gráfico 13 del Apéndice: 'Estrategias de Fijación de Precios por Estructura de Mercado'.",
+    "section": "EA3 · Semana 13"
+  },
+  {
+    "q": "Explique cómo el emprendimiento transforma los sectores económicos, mencionando al menos dos ejemplos de startups disruptivas del material.",
+    "guide": "Los emprendedores transforman sectores mediante: (1) creación de nuevos mercados, identificando necesidades insatisfechas; (2) mejora de la eficiencia con procesos más productivos; (3) aumento de la competencia, dando más opciones a los consumidores. Ejemplos: Airbnb (conectó propietarios y viajeros directamente, disrumpiendo la hotelería) y Uber (economía de plataforma aplicada al transporte urbano).",
+    "materia": "EA3 · Sección 08: 'Cómo los emprendedores transforman los sectores económicos' y 'Ejemplos de startups disruptivos'.",
+    "section": "EA3 · Semana 14"
+  },
+  {
+    "q": "Describa al menos tres desafíos que enfrentan los emprendedores según el material y proponga una estrategia para superar uno de ellos.",
+    "guide": "Desafíos mencionados: acceso al financiamiento, falta de infraestructura, regulaciones complejas, competencia con grandes empresas y altos costos operativos/tecnológicos. Estrategia propuesta (ejemplo): para el acceso al financiamiento, el emprendedor puede buscar fondos de capital de riesgo, crowdfunding o alianzas estratégicas con empresas establecidas, además de aprovechar subsidios estatales al emprendimiento.",
+    "materia": "EA3 · 'Desafíos que enfrentan los emprendedores' y 'Estrategia de fijación de precios para emprendimientos'.",
+    "section": "EA3 · Semana 14"
+  }
+];
+
+</script>
+<script>
+// ============================================================
+// Motor del Examen — Fundamentos de Economía DuocUC
+// ============================================================
+
+const state = {
+  mode: 'alternativas', // 'alternativas' | 'vf' | 'desarrollo'
+  answers: {}, // { mode: { qIndex: value } }
+  revealed: {}, // { mode: { qIndex: true } }
+  materiaOpen: {}, // { mode: { qIndex: true } }
+  finished: {}, // { mode: bool }
+};
+
+state.answers.alternativas = {};
+state.answers.vf = {};
+state.answers.desarrollo = {};
+state.revealed.alternativas = {};
+state.revealed.vf = {};
+state.materiaOpen.alternativas = {};
+state.materiaOpen.vf = {};
+state.materiaOpen.desarrollo = {};
+state.finished.alternativas = false;
+state.finished.vf = false;
+state.finished.desarrollo = false;
+
+const LETTERS = ['A', 'B', 'C', 'D', 'E'];
+
+function getDataset(mode) {
+  if (mode === 'alternativas') return ALTERNATIVAS;
+  if (mode === 'vf') return VF;
+  return DESARROLLO;
+}
+
+function getModeLabel(mode) {
+  if (mode === 'alternativas') return 'Alternativas';
+  if (mode === 'vf') return 'Verdadero / Falso';
+  return 'Desarrollo';
+}
+
+// ------------------------------------------------------------
+// RENDER
+// ------------------------------------------------------------
+function renderAll() {
+  updateModeButtons();
+  updateProgress();
+  renderQuestions();
+  updateScoreLine();
+}
+
+function updateModeButtons() {
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === state.mode);
+  });
+}
+
+function renderQuestions() {
+  const main = document.getElementById('mainArea');
+  const dataset = getDataset(state.mode);
+  main.innerHTML = '';
+
+  dataset.forEach((item, idx) => {
+    const card = buildCard(item, idx);
+    main.appendChild(card);
+  });
+}
+
+function buildCard(item, idx) {
+  const mode = state.mode;
+  const wrap = document.createElement('div');
+  wrap.className = 'qcard';
+  wrap.id = `card-${mode}-${idx}`;
+
+  const answered = state.answers[mode][idx] !== undefined;
+  const revealed = mode === 'desarrollo' ? state.materiaOpen.desarrollo[idx] : state.revealed[mode][idx];
+
+  if (mode !== 'desarrollo' && revealed) {
+    const isCorrect = checkCorrect(item, state.answers[mode][idx]);
+    wrap.classList.add(isCorrect ? 'correct' : 'incorrect');
+  }
+
+  // head
+  const head = document.createElement('div');
+  head.className = 'qhead';
+  head.innerHTML = `
+    <span class="qnum">Pregunta ${idx + 1} / ${getDataset(mode).length}</span>
+    <span class="qsection">${item.section}</span>
+  `;
+  wrap.appendChild(head);
+
+  // question text
+  const qtext = document.createElement('div');
+  qtext.className = 'qtext';
+  qtext.textContent = item.q;
+  wrap.appendChild(qtext);
+
+  // body by mode
+  if (mode === 'alternativas') {
+    wrap.appendChild(buildAlternativas(item, idx));
+  } else if (mode === 'vf') {
+    wrap.appendChild(buildVF(item, idx));
+  } else {
+    wrap.appendChild(buildDesarrollo(item, idx));
+  }
+
+  // explanation box (alternativas/vf)
+  if (mode !== 'desarrollo') {
+    const explainBox = document.createElement('div');
+    explainBox.className = 'explain-box' + (revealed ? ' show' : '');
+    explainBox.id = `explain-${mode}-${idx}`;
+    if (revealed) {
+      const isCorrect = checkCorrect(item, state.answers[mode][idx]);
+      explainBox.innerHTML = `<strong>${isCorrect ? '✓ Correcto.' : '✗ Incorrecto.'}</strong> ${item.explain}`;
+    }
+    wrap.appendChild(explainBox);
+  }
+
+  // materia box
+  const materiaBox = document.createElement('div');
+  const materiaIsOpen = state.materiaOpen[mode][idx];
+  materiaBox.className = 'materia-box' + (materiaIsOpen ? ' open' : '');
+  materiaBox.id = `materia-${mode}-${idx}`;
+  materiaBox.innerHTML = `
+    <div class="m-label">📖 Materia relacionada</div>
+    <div class="m-text">${item.materia}</div>
+  `;
+  wrap.appendChild(materiaBox);
+
+  // footer
+  const foot = document.createElement('div');
+  foot.className = 'qfoot';
+
+  const leftBtns = document.createElement('div');
+  leftBtns.style.display = 'flex';
+  leftBtns.style.gap = '8px';
+  leftBtns.style.flexWrap = 'wrap';
+
+  const materiaBtn = document.createElement('button');
+  materiaBtn.className = 'btn ghost-gold';
+  materiaBtn.innerHTML = materiaIsOpen ? '📖 Ocultar materia' : '📖 Leer materia relacionada';
+  materiaBtn.onclick = () => toggleMateria(mode, idx);
+  leftBtns.appendChild(materiaBtn);
+
+  if (mode !== 'desarrollo' && answered && !revealed) {
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'btn primary';
+    checkBtn.textContent = 'Comprobar respuesta ✓';
+    checkBtn.onclick = () => revealAnswer(mode, idx);
+    leftBtns.appendChild(checkBtn);
+  }
+
+  if (mode === 'desarrollo') {
+    const guideBtn = document.createElement('button');
+    guideBtn.className = 'btn primary';
+    guideBtn.innerHTML = state.revealed.desarrollo && state.revealed.desarrollo[idx] ? 'Ocultar pauta' : 'Ver pauta de respuesta';
+    guideBtn.onclick = () => toggleGuide(idx);
+    leftBtns.appendChild(guideBtn);
+  }
+
+  foot.appendChild(leftBtns);
+
+  const tag = document.createElement('span');
+  if (mode !== 'desarrollo' && revealed) {
+    const isCorrect = checkCorrect(item, state.answers[mode][idx]);
+    tag.className = 'feedback-tag show ' + (isCorrect ? 'ok' : 'bad');
+    tag.textContent = isCorrect ? '✓ Correcta' : '✗ Incorrecta';
+  } else {
+    tag.className = 'feedback-tag';
+  }
+  foot.appendChild(tag);
+
+  wrap.appendChild(foot);
+
+  // guide box for desarrollo
+  if (mode === 'desarrollo') {
+    const guideOpen = state.revealed.desarrollo && state.revealed.desarrollo[idx];
+    const guideBox = document.createElement('div');
+    guideBox.className = 'rubric-box' + (guideOpen ? ' open' : '');
+    guideBox.id = `guide-${idx}`;
+    guideBox.innerHTML = `<strong>Pauta de respuesta esperada:</strong><br>${item.guide}`;
+    wrap.appendChild(guideBox);
+  }
+
+  return wrap;
+}
+
+function buildAlternativas(item, idx) {
+  const mode = 'alternativas';
+  const container = document.createElement('div');
+  container.className = 'options';
+
+  const answered = state.answers[mode][idx];
+  const revealed = state.revealed[mode][idx];
+
+  item.opts.forEach((opt, oi) => {
+    const row = document.createElement('div');
+    row.className = 'opt';
+    if (answered === oi) row.classList.add('selected');
+    if (revealed) {
+      if (oi === item.correct) row.classList.add('reveal-correct');
+      else if (oi === answered) row.classList.add('reveal-wrong');
+    }
+    row.innerHTML = `<span class="letter">${LETTERS[oi]}</span><span class="otext">${opt}</span>`;
+    if (!revealed) {
+      row.onclick = () => selectAnswer(mode, idx, oi);
+    }
+    container.appendChild(row);
+  });
+
+  return container;
+}
+
+function buildVF(item, idx) {
+  const mode = 'vf';
+  const container = document.createElement('div');
+  container.className = 'tf-row';
+
+  const answered = state.answers[mode][idx];
+  const revealed = state.revealed[mode][idx];
+
+  [['Verdadero', true], ['Falso', false]].forEach(([label, val]) => {
+    const btn = document.createElement('div');
+    btn.className = 'tf-btn';
+    if (answered === val) btn.classList.add('selected');
+    if (revealed) {
+      if (val === item.correct) btn.classList.add('reveal-correct');
+      else if (val === answered) btn.classList.add('reveal-wrong');
+    }
+    btn.textContent = label;
+    if (!revealed) {
+      btn.onclick = () => selectAnswer(mode, idx, val);
+    }
+    container.appendChild(btn);
+  });
+
+  return container;
+}
+
+function buildDesarrollo(item, idx) {
+  const mode = 'desarrollo';
+  const container = document.createElement('div');
+
+  const textarea = document.createElement('textarea');
+  textarea.className = 'essay';
+  textarea.placeholder = 'Escribe aquí tu respuesta de desarrollo…';
+  textarea.value = state.answers[mode][idx] || '';
+  textarea.oninput = (e) => {
+    state.answers[mode][idx] = e.target.value;
+    updateProgress();
+    updateScoreLine();
+  };
+  container.appendChild(textarea);
+
+  return container;
+}
+
+// ------------------------------------------------------------
+// ACTIONS
+// ------------------------------------------------------------
+function selectAnswer(mode, idx, value) {
+  state.answers[mode][idx] = value;
+  updateProgress();
+  updateScoreLine();
+  renderQuestions();
+  // keep scroll position roughly by re-focusing the card
+  const el = document.getElementById(`card-${mode}-${idx}`);
+  if (el) el.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+}
+
+function revealAnswer(mode, idx) {
+  state.revealed[mode][idx] = true;
+  updateScoreLine();
+  renderQuestions();
+}
+
+function toggleMateria(mode, idx) {
+  state.materiaOpen[mode][idx] = !state.materiaOpen[mode][idx];
+  renderQuestions();
+}
+
+function toggleGuide(idx) {
+  if (!state.revealed.desarrollo) state.revealed.desarrollo = {};
+  state.revealed.desarrollo[idx] = !state.revealed.desarrollo[idx];
+  renderQuestions();
+}
+
+function checkCorrect(item, answer) {
+  if (state.mode === 'alternativas') return answer === item.correct;
+  if (state.mode === 'vf') return answer === item.correct;
+  return null;
+}
+
+// ------------------------------------------------------------
+// PROGRESS / SCORE
+// ------------------------------------------------------------
+function updateProgress() {
+  const dataset = getDataset(state.mode);
+  const answeredCount = Object.keys(state.answers[state.mode]).filter(k => {
+    const v = state.answers[state.mode][k];
+    return v !== undefined && v !== '';
+  }).length;
+  const total = dataset.length;
+  const pct = total ? Math.round((answeredCount / total) * 100) : 0;
+
+  document.getElementById('progressLabel').textContent = `${answeredCount} / ${total} respondidas`;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function updateScoreLine() {
+  const mode = state.mode;
+  const dataset = getDataset(mode);
+  const scoreLine = document.getElementById('scoreLine');
+
+  if (mode === 'desarrollo') {
+    const answeredCount = Object.keys(state.answers.desarrollo).filter(k => {
+      const v = state.answers.desarrollo[k];
+      return v !== undefined && v.trim() !== '';
+    }).length;
+    scoreLine.innerHTML = `Respuestas redactadas: <b>${answeredCount}</b> / ${dataset.length} · Usa "Ver pauta" para autoevaluarte`;
+    return;
+  }
+
+  let correct = 0, incorrect = 0, unanswered = 0;
+  dataset.forEach((item, idx) => {
+    const ans = state.answers[mode][idx];
+    if (ans === undefined) {
+      unanswered++;
+    } else if (state.revealed[mode][idx]) {
+      if (checkCorrect(item, ans)) correct++;
+      else incorrect++;
+    }
+  });
+  scoreLine.innerHTML = `Correctas: <b>${correct}</b> · Incorrectas: <b>${incorrect}</b> · Sin responder: <b>${unanswered}</b>`;
+}
+
+// ------------------------------------------------------------
+// TOP-LEVEL CONTROLS
+// ------------------------------------------------------------
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.mode = btn.dataset.mode;
+    renderAll();
+    window.scrollTo({ top: document.querySelector('.controls-wrap').offsetTop - 4, behavior: 'smooth' });
+  });
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  const mode = state.mode;
+  if (!confirm(`¿Reiniciar todas tus respuestas de la sección "${getModeLabel(mode)}"?`)) return;
+  state.answers[mode] = {};
+  state.revealed[mode] = {};
+  if (mode === 'desarrollo') state.revealed.desarrollo = {};
+  state.materiaOpen[mode] = {};
+  renderAll();
+});
+
+document.getElementById('btnFinish').addEventListener('click', () => {
+  const mode = state.mode;
+  const dataset = getDataset(mode);
+
+  if (mode === 'desarrollo') {
+    // reveal all guides
+    dataset.forEach((_, idx) => {
+      state.revealed.desarrollo[idx] = true;
+    });
+    renderQuestions();
+    showSummary(mode, null, null, null);
+    return;
+  }
+
+  // reveal all + compute score
+  dataset.forEach((_, idx) => {
+    state.revealed[mode][idx] = true;
+  });
+
+  let correct = 0, incorrect = 0, unanswered = 0;
+  dataset.forEach((item, idx) => {
+    const ans = state.answers[mode][idx];
+    if (ans === undefined) unanswered++;
+    else if (checkCorrect(item, ans)) correct++;
+    else incorrect++;
+  });
+
+  renderQuestions();
+  updateScoreLine();
+  showSummary(mode, correct, incorrect, unanswered);
+});
+
+function showSummary(mode, correct, incorrect, unanswered) {
+  const main = document.getElementById('mainArea');
+  const dataset = getDataset(mode);
+  const summary = document.createElement('div');
+  summary.className = 'summary-card';
+
+  if (mode === 'desarrollo') {
+    summary.innerHTML = `
+      <div class="big-score">✓</div>
+      <p>Se revelaron las pautas de respuesta para las ${dataset.length} preguntas de desarrollo. Compara tu redacción con cada pauta y ajusta según los conceptos clave que falten.</p>
+    `;
+  } else {
+    const total = dataset.length;
+    const pct = total ? Math.round((correct / total) * 100) : 0;
+    summary.innerHTML = `
+      <div class="big-score">${pct}<span>%</span></div>
+      <p><b>${correct}</b> correctas · <b>${incorrect}</b> incorrectas · <b>${unanswered}</b> sin responder — de ${total} preguntas en "${getModeLabel(mode)}"</p>
+    `;
+  }
+  main.prepend(summary);
+  window.scrollTo({ top: main.offsetTop - 90, behavior: 'smooth' });
+}
+
+// ------------------------------------------------------------
+// INIT
+// ------------------------------------------------------------
+renderAll();
+
+</script>
+</body>
+</html>
